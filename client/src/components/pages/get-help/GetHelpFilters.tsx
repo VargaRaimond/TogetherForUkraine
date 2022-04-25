@@ -12,7 +12,6 @@ import {
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { IOfferTableEntry } from "./GetHelpPage";
 import Tooltip from "@mui/material/Tooltip";
-import * as React from "react";
 
 interface IGetHelpFiltersProps {
   offers: IOfferTableEntry[];
