@@ -1,5 +1,7 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
 import HeaderMenu from "./components/header-menu/HeaderMenu";
 
 const appTheme = createTheme({
@@ -19,6 +21,10 @@ const appTheme = createTheme({
   },
 });
 
+const HomePage = () => {
+  return <></>;
+};
+
 function App() {
   // Don't delete!
   // Example on how to comunicate with backend
@@ -35,7 +41,15 @@ function App() {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <HeaderMenu />
+      <BrowserRouter>
+        <HeaderMenu />
+        {/* todo: link example - will be removed */}
+        <Link to="/get-help">Link</Link>
+        <Routes>
+          {/*<Route path="/get-help" element={<GetHelpPage />} />*/}
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
