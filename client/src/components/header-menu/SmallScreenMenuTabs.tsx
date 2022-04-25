@@ -5,9 +5,12 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import { ILink } from "./MenuTabs";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ISmallScreenMenuTabsProps {
-  pages: string[]; // TODO: pages should be more than strings
+  pages: ILink[];
   anchorElNav: null | HTMLElement;
   setAnchorElNav: (value: HTMLElement | null) => void;
 }
@@ -17,13 +20,23 @@ const SmallScreenMenuTabs = ({
   anchorElNav,
   setAnchorElNav,
 }: ISmallScreenMenuTabsProps) => {
+  const navigate = useNavigate();
+
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = useCallback(() => {
     setAnchorElNav(null);
-  };
+  }, [setAnchorElNav]);
+
+  const handleMenuItemClick = useCallback(
+    (pathTo) => {
+      handleCloseNavMenu();
+      navigate(pathTo, { replace: true });
+    },
+    [handleCloseNavMenu, navigate]
+  );
 
   return (
     <>
@@ -57,8 +70,11 @@ const SmallScreenMenuTabs = ({
           }}
         >
           {pages.map((page) => (
-            <MenuItem key={page} onClick={handleCloseNavMenu}>
-              <Typography textAlign="center">{page}</Typography>
+            <MenuItem
+              key={page.name}
+              onClick={() => handleMenuItemClick(page.pathTo)}
+            >
+              <Typography textAlign="center">{page.name}</Typography>
             </MenuItem>
           ))}
         </Menu>
