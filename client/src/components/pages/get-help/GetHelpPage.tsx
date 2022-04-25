@@ -11,6 +11,18 @@ const staticRows: IOfferEntry[] = [
     location: "Bacau",
   },
   {
+    name: "Help 11",
+    volunteer: "Eu",
+    category: "Food",
+    location: "Bacau",
+  },
+  {
+    name: "Help 111",
+    volunteer: "Eu",
+    category: "Money",
+    location: "Bacau",
+  },
+  {
     name: "Help 2",
     volunteer: "Tu",
     category: "Money",

@@ -1,8 +1,14 @@
-import { SyntheticEvent, useCallback, useMemo } from "react";
-import { AutocompleteValue, IconButton, Toolbar, Tooltip } from "@mui/material";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { AutocompleteValue, Toolbar } from "@mui/material";
 import SearchBar from "../../utils/SearchBar";
 import { IOfferTableEntry } from "./GetHelpPage";
+import GetHelpFilters from "./GetHelpFilters";
 
 interface IGetHelpTableToolbarProps {
   offers: IOfferTableEntry[];
@@ -15,21 +21,51 @@ const GetHelpTableToolbar = ({
 }: IGetHelpTableToolbarProps) => {
   const options = useMemo(() => offers.map(({ name }) => name), [offers]);
 
+  const [searchedWord, setSearchWord] = useState<string | undefined>(undefined);
+  const [selectedFilters, setSelectedFilters] = useState({
+    location: "",
+    category: "",
+  });
+
   const searchOnChangeHandler = useCallback(
     (
       event: SyntheticEvent,
       value: AutocompleteValue<string, undefined, undefined, undefined>
     ) => {
-      setOffers(
-        value === null
-          ? offers
-          : offers.filter(({ name }) =>
-              name.toLowerCase().includes(value.toLowerCase())
-            )
-      );
+      setSearchWord(value?.toLowerCase() || undefined);
     },
-    [offers, setOffers]
+    []
   );
+
+  useEffect(() => {
+    const { location: selectedLocation, category: selectedCategory } =
+      selectedFilters;
+
+    const offersAfterSearch =
+      searchedWord === undefined
+        ? offers
+        : offers.filter(({ name }) =>
+            name.toLowerCase().includes(searchedWord)
+          );
+
+    setOffers(
+      offersAfterSearch.filter(({ location, category }) => {
+        if (selectedLocation !== "" && selectedCategory !== "") {
+          return location === selectedLocation && category === selectedCategory;
+        }
+
+        if (selectedLocation === "" && selectedCategory !== "") {
+          return category === selectedCategory;
+        }
+
+        if (selectedLocation !== "" && selectedCategory === "") {
+          return location === selectedLocation;
+        }
+
+        return true;
+      })
+    );
+  }, [offers, searchedWord, selectedFilters, setOffers]);
 
   return (
     <Toolbar
@@ -38,17 +74,11 @@ const GetHelpTableToolbar = ({
         pr: { xs: 1, sm: 1 },
       }}
     >
-      <Tooltip title="Search bar">
-        <SearchBar
-          options={options}
-          searchOnChangeHandler={searchOnChangeHandler}
-        />
-      </Tooltip>
-      <Tooltip title="Filter list">
-        <IconButton>
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip>
+      <SearchBar
+        options={options}
+        searchOnChangeHandler={searchOnChangeHandler}
+      />
+      <GetHelpFilters offers={offers} setSelectedFilters={setSelectedFilters} />
     </Toolbar>
   );
 };
