@@ -2,8 +2,18 @@ import * as React from "react";
 import SmallScreenMenuTabs from "./SmallScreenMenuTabs";
 import LargeScreenMenuTabs from "./LargeScreenMenuTabs";
 
-// TODO: stop using this / update this
-const pages = ["Home", "Get help", "Provide help", "Help offers"];
+export interface ILink {
+  name: string;
+  pathTo: string;
+}
+
+// TODO: Conditionally display / hide some tabs
+const pages: ILink[] = [
+  { name: "Home", pathTo: "/" },
+  { name: "Get help", pathTo: "/get-help" },
+  { name: "Provide help", pathTo: "/provide-help" },
+  { name: "Help offers", pathTo: "/help-offers" },
+];
 
 const MenuTabs = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
