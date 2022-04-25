@@ -1,0 +1,15 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "tslint-react-hooks"
+    ],
+    "jsRules": {},
+    "plugins": ["react-hooks"],
+    "rules": {
+        "react-hooks-nesting": "error",
+        "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+        "react-hooks/exhaustive-deps": "error" // Checks effect dependencies
+    },
+    "rulesDirectory": []
+}
