@@ -1,7 +1,7 @@
-import * as React from "react";
+import { ChangeEvent } from "react";
 import { TablePagination } from "@mui/material";
 
-interface ISmaTablePaginationProps {
+interface IGenericTablePaginationProps {
   page: number;
   setPage: (page: number) => void;
   rowsPerPage: number;
@@ -14,14 +14,12 @@ const GenericTablePagination = ({
   rowsPerPage,
   setRowsPerPage,
   totalElements,
-}: ISmaTablePaginationProps) => {
+}: IGenericTablePaginationProps) => {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

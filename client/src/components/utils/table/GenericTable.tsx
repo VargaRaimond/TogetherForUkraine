@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, MouseEvent } from "react";
 import {
   Box,
   Paper,
@@ -11,38 +10,38 @@ import {
 } from "@mui/material";
 import { getComparator, Order } from "./GenericTableComparators";
 import GenericTableHead, { HeadCell } from "./GenericTableHead";
-import GenericTableToolbar from "./GenericTableToolbar";
 import GenericTablePagination from "./GenericTablePagination";
 import GenericTableRow from "./GenericTableRow";
 
-export interface ISmaTableRow {
+export interface IGenericTableRow {
   [key: string]: any;
 }
 
-interface ISmaTableProps {
-  rows: ISmaTableRow[] /* [{keyA: valueA1, keyB: valueB1 }, {keyA: valueA2, keyB: valueB2 }] */;
-  headCells: readonly HeadCell<ISmaTableRow>[] /* [{id: keyA (must be the key from above), label: labelName: }] */;
+interface IGenericTableProps {
+  rows: IGenericTableRow[] /* [{keyA: valueA1, keyB: valueB1 }, {keyA: valueA2, keyB: valueB2 }] */;
+  headCells: readonly HeadCell<IGenericTableRow>[] /* [{id: keyA (must be the key from above), label: labelName: }] */;
+  showSearchBar?: boolean;
 }
 
-function GenericTable({ rows: initialRows, headCells }: ISmaTableProps) {
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof ISmaTableRow>("id");
+function GenericTable({ rows: initialRows, headCells }: IGenericTableProps) {
+  const [order, setOrder] = useState<Order>("asc");
+  const [orderBy, setOrderBy] = useState<keyof IGenericTableRow>("id");
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof ISmaTableRow
+    event: MouseEvent<unknown>,
+    property: keyof IGenericTableRow
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
-  const arrangedRows = useMemo(() => {
+  const rows = useMemo(() => {
     return initialRows.map((row) => {
-      const rowInOrder: ISmaTableRow = {};
+      const rowInOrder: IGenericTableRow = {};
 
       headCells.forEach(({ id }) => {
         rowInOrder[id] = row[id];
@@ -52,10 +51,6 @@ function GenericTable({ rows: initialRows, headCells }: ISmaTableProps) {
     });
   }, [headCells, initialRows]);
 
-  // Will be very helpful after adding the searchBar and filters
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [rows, setRows] = useState<ISmaTableRow[]>(arrangedRows);
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = useMemo(
     () => (page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0),
@@ -64,8 +59,6 @@ function GenericTable({ rows: initialRows, headCells }: ISmaTableProps) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <GenericTableToolbar />
-
       <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>
           <Table
@@ -84,7 +77,7 @@ function GenericTable({ rows: initialRows, headCells }: ISmaTableProps) {
                 .sort(getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  return <GenericTableRow key={`${index}-sma-row`} row={row} />;
+                  return <GenericTableRow key={`${index}-row`} row={row} />;
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>

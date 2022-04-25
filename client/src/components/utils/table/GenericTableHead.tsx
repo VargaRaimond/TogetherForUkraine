@@ -1,4 +1,4 @@
-import * as React from "react";
+import { MouseEvent } from "react";
 import {
   Box,
   styled,
@@ -20,12 +20,12 @@ export interface HeadCell<HeadCellDataType> {
   label?: string;
 }
 
-interface ISmaTableHeadProps<HeadCellDataType> {
+interface IGenericTableHeadProps<HeadCellDataType> {
   headCells: readonly HeadCell<HeadCellDataType>[];
   order: Order;
   orderBy: string;
   onRequestSort: (
-    event: React.MouseEvent<unknown>,
+    event: MouseEvent<unknown>,
     property: keyof HeadCellDataType
   ) => void;
 }
@@ -35,10 +35,9 @@ function GenericTableHead<HeadCellDataType>({
   order,
   orderBy,
   onRequestSort,
-}: ISmaTableHeadProps<HeadCellDataType>) {
+}: IGenericTableHeadProps<HeadCellDataType>) {
   const createSortHandler =
-    (property: keyof HeadCellDataType) =>
-    (event: React.MouseEvent<unknown>) => {
+    (property: keyof HeadCellDataType) => (event: MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 

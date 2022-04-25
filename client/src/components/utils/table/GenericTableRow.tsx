@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { TableCell, TableRow } from "@mui/material";
-import { ISmaTableRow } from "./GenericTable";
+import { IGenericTableRow } from "./GenericTable";
 
-interface ISmaTableRowProps {
-  row: ISmaTableRow;
+interface IGenericTableRowProps {
+  row: IGenericTableRow;
 }
 
-const GenericTableRow = ({ row }: ISmaTableRowProps) => {
+const GenericTableRow = ({ row }: IGenericTableRowProps) => {
   const displayedRowColumns = useMemo(() => {
     const tempRowColumns = { ...row, id: undefined };
     if (tempRowColumns.id === undefined) {
