@@ -86,11 +86,11 @@ const GetHelpModal = ({
         </Typography>
 
         {/* TODO role: only for refugees */}
-        {/* TODO: add onClick */}
+        {/* TODO onClick modal: Send */}
         <SendButton endIcon={<Send />}>Apply now</SendButton>
 
         {/* TODO role: only for admin */}
-        {/* TODO: add onClick */}
+        {/* TODO onClick modal: Delete */}
         <DeleteButton startIcon={<Delete />}>Delete</DeleteButton>
       </Box>
     </Modal>
