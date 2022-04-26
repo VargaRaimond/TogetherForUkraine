@@ -1,4 +1,4 @@
-import { useCallback, useState, MouseEvent } from "react";
+import { useCallback, useState, MouseEvent, useMemo } from "react";
 import {
   IconButton,
   InputLabel,
@@ -34,10 +34,15 @@ const GetHelpFilters = ({
     null
   );
 
-  // @ts-ignore
-  const categories = [...new Set(offers.map(({ category }) => category))];
-  // @ts-ignore
-  const locations = [...new Set(offers.map(({ location }) => location))];
+  const categories = useMemo(
+    () => [...new Set(offers.map(({ category }) => category))],
+    [offers]
+  );
+
+  const locations = useMemo(
+    () => [...new Set(offers.map(({ location }) => location))],
+    [offers]
+  );
 
   const [selectedCategory, setCategory] = useState<string>("");
   const [selectedLocation, setLocation] = useState<string>("");
