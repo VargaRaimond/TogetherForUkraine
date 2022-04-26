@@ -91,11 +91,11 @@ const GetHelpFilters = ({
         onClose={handleCloseFilterMenu}
       >
         <Box sx={{ padding: "15px" }}>
-          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <InputLabel id="category-filter-label">Category</InputLabel>
           <Select
             sx={{ width: "220px" }}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="category-filter-label"
+            id="category-filter-select"
             label="Category"
             value={selectedCategory}
             onChange={(e) => onChangeHandler(e, ItemType.CATEGORY)}
@@ -110,11 +110,11 @@ const GetHelpFilters = ({
             ))}
           </Select>
 
-          <InputLabel id="demo-simple-select-label">Location</InputLabel>
+          <InputLabel id="location-filter-label">Location</InputLabel>
           <Select
             sx={{ width: "220px" }}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="location-filter-label"
+            id="location-filter-select"
             label="Location"
             value={selectedLocation}
             onChange={(e) => onChangeHandler(e, ItemType.LOCATION)}
