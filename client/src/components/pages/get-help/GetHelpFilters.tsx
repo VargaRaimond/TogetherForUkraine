@@ -34,14 +34,6 @@ const GetHelpFilters = ({
     null
   );
 
-  const handleOpenFilterMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElFilter(event.currentTarget);
-  };
-
-  const handleCloseFilterMenu = () => {
-    setAnchorElFilter(null);
-  };
-
   // @ts-ignore
   const categories = [...new Set(offers.map(({ category }) => category))];
   // @ts-ignore
@@ -49,6 +41,16 @@ const GetHelpFilters = ({
 
   const [selectedCategory, setCategory] = useState<string>("");
   const [selectedLocation, setLocation] = useState<string>("");
+
+  const handleOpenFilterMenu = (event: MouseEvent<HTMLElement>) => {
+    setAnchorElFilter(event.currentTarget);
+  };
+
+  const handleCloseFilterMenu = () => {
+    setCategory("");
+    setLocation("");
+    setAnchorElFilter(null);
+  };
 
   const onChangeHandler = useCallback(
     (event: SelectChangeEvent, item: ItemType) => {
