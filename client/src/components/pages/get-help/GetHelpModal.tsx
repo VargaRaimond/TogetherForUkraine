@@ -25,24 +25,10 @@ const boxStyle = {
   p: 4,
 };
 
-const SendButton = styled(Button)(({ theme }) => ({
+const StyledButton = styled(Button)(() => ({
   margin: "5px",
   alignSelf: "end",
-  width: "30%",
-  backgroundColor: theme.palette.primary.light,
-}));
-
-const DeleteButton = styled(Button)(({ theme }) => ({
-  margin: "5px",
-  alignSelf: "end",
-  width: "30%",
-  backgroundColor: theme.palette.error.main,
-  "&.MuiButton-text": {
-    color: "white",
-    "&:hover": {
-      color: "inherit",
-    },
-  },
+  width: "40%",
 }));
 
 const GetHelpModal = ({
@@ -87,11 +73,19 @@ const GetHelpModal = ({
 
         {/* TODO role: only for refugees */}
         {/* TODO onClick modal: Send */}
-        <SendButton endIcon={<Send />}>Apply now</SendButton>
+        <StyledButton endIcon={<Send />} variant="contained">
+          Apply now
+        </StyledButton>
 
         {/* TODO role: only for admin */}
         {/* TODO onClick modal: Delete */}
-        <DeleteButton startIcon={<Delete />}>Delete</DeleteButton>
+        <StyledButton
+          startIcon={<Delete />}
+          variant="contained"
+          color={"error"}
+        >
+          Delete
+        </StyledButton>
       </Box>
     </Modal>
   );

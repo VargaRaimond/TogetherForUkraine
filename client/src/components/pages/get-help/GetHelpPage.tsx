@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from "react";
 import GenericTable from "../../utils/table/GenericTable";
-import { Button, styled } from "@mui/material";
+import { Button } from "@mui/material";
 import GetHelpTableToolbar from "./GetHelpTableToolbar";
 import GetHelpModal from "./GetHelpModal";
+import { PageWrapper } from "../../utils/CommonComponents";
 
 const staticRows: IOfferEntry[] = [
   {
@@ -96,14 +97,6 @@ const headCells = [
   { id: "seeMore" },
 ];
 
-const PageWrapper = styled("div")(() => ({
-  padding: "25px",
-}));
-
-const SeeMoreButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.light,
-}));
-
 export interface IOfferEntry {
   name: string;
   description: string;
@@ -127,9 +120,9 @@ const GetHelpPage = () => {
       staticRows.map((offer) => ({
         ...offer,
         seeMore: (
-          <SeeMoreButton onClick={() => setModalOffer(offer)}>
+          <Button onClick={() => setModalOffer(offer)} variant={"contained"}>
             See more
-          </SeeMoreButton>
+          </Button>
         ),
       })),
     []
