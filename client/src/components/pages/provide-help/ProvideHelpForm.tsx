@@ -59,10 +59,7 @@ const ProvideHelpForm = () => {
     >
       <Box
         sx={{
-          // padding: "5%",
           maxWidth: "500px",
-          // border: 1,
-          // borderRadius: "16px",
         }}
       >
         <FormLabel
