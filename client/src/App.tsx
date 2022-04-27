@@ -1,8 +1,9 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import HeaderMenu from "./components/header-menu/HeaderMenu";
+import GetHelpPage from "./components/pages/get-help/GetHelpPage";
 
 const appTheme = createTheme({
   // https://mui.com/customization/palette/
@@ -43,10 +44,8 @@ function App() {
     <ThemeProvider theme={appTheme}>
       <BrowserRouter>
         <HeaderMenu />
-        {/* todo: link example - will be removed */}
-        <Link to="/get-help">Link</Link>
         <Routes>
-          {/*<Route path="/get-help" element={<GetHelpPage />} />*/}
+          <Route path="/get-help" element={<GetHelpPage />} />
           <Route path="/" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
