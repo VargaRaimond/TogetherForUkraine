@@ -1,9 +1,10 @@
+// Name generator: https://www.behindthename.com/random/random.php?gender=both&number=2&sets=1&surname=&usage_rmn=1
 export const mockOffers = [
   {
     name: "Help 1",
     description:
       "Volunteers are individuals who freely offer their time, labor, and expertise. Volunteers often work for schools or NGOs, where they typically receive training and report to designated senior staff. Completely free trial, no card required.",
-    volunteer: "Eu",
+    volunteer: "Emanuel Ambroise",
     category: "Food",
     location: "Bacau",
     remainingOffers: 5,
@@ -12,7 +13,7 @@ export const mockOffers = [
   {
     name: "Help 11",
     description: "",
-    volunteer: "Eu",
+    volunteer: "Judith Marcel",
     category: "Food",
     location: "Bacau",
     remainingOffers: 5,
@@ -21,7 +22,7 @@ export const mockOffers = [
   {
     name: "Help 111",
     description: "",
-    volunteer: "Eu",
+    volunteer: "Robin Fulvio",
     category: "Money",
     location: "Bacau",
     remainingOffers: 5,
@@ -30,7 +31,7 @@ export const mockOffers = [
   {
     name: "Help 2",
     description: "",
-    volunteer: "Tu",
+    volunteer: "Gianmarco Colombo",
     category: "Money",
     location: "Bucuresti",
     remainingOffers: 5,
@@ -39,7 +40,7 @@ export const mockOffers = [
   {
     name: "Help 3",
     description: "",
-    volunteer: "Noi",
+    volunteer: "Marie-Françoise Serafina",
     category: "Money",
     location: "Suceava",
     remainingOffers: 5,
@@ -48,7 +49,7 @@ export const mockOffers = [
   {
     name: "Help 4",
     description: "",
-    volunteer: "Voi",
+    volunteer: "Marie-Françoise Serafina",
     category: "Money",
     location: "Brasov",
     remainingOffers: 5,
@@ -57,7 +58,7 @@ export const mockOffers = [
   {
     name: "Help 5",
     description: "",
-    volunteer: "El",
+    volunteer: "Sara Sandu",
     category: "Money",
     location: "Bucuresti",
     remainingOffers: 5,
@@ -66,7 +67,7 @@ export const mockOffers = [
   {
     name: "Help 6",
     description: "",
-    volunteer: "Ea",
+    volunteer: "Delia Catrinel",
     category: "Money",
     location: "Craiova",
     remainingOffers: 5,
@@ -74,8 +75,8 @@ export const mockOffers = [
   },
   {
     name: "Help 7",
-    description: "",
-    volunteer: "Ele",
+    description: "Tereza Denisa",
+    volunteer: "Marie-Françoise Serafina",
     category: "Food",
     location: "Constanta",
     remainingOffers: 5,
@@ -84,7 +85,7 @@ export const mockOffers = [
   {
     name: "Help 8",
     description: "",
-    volunteer: "Ei",
+    volunteer: "Marie-Françoise Serafina",
     category: "Accomodation",
     location: "Cluj",
     remainingOffers: 5,

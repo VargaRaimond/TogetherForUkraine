@@ -8,9 +8,17 @@ import { mockOffers } from "../../0-mock-data/mock-offers";
 
 export interface IHelpOffers extends IOfferEntry {
   date: string;
+  phoneNumber: string;
+  email: string;
+  isAnonymous?: boolean;
 }
 
-const staticRows: IHelpOffers[] = mockOffers;
+const staticRows: IHelpOffers[] = mockOffers.map((offer) => ({
+  ...offer,
+  phoneNumber: "0722 072 072",
+  email: "email@email.com",
+  isAnonymous: offer.category === "Money",
+}));
 
 const headCells = [
   { id: "date", label: "Date" },
@@ -44,13 +52,11 @@ const HelpOffersPage = () => {
   const handleOfferAccept = (offer: IHelpOffers) => {
     // TODO db: handle accept
     setOffers(offers.filter((o) => o.name !== offer.name));
-    console.log("Accept", offer);
   };
 
   const handleOfferDecline = (offer: IHelpOffers) => {
     // TODO db: handle decline
     setOffers(offers.filter((o) => o.name !== offer.name));
-    console.log("Decline", offer);
   };
 
   return (

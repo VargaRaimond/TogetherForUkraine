@@ -27,7 +27,6 @@ const boxStyle = {
 
 const StyledButton = styled(Button)(() => ({
   margin: "5px",
-  alignSelf: "end",
   width: "30%",
 }));
 
@@ -80,26 +79,43 @@ const HelpOffersModal = ({
           {offer?.description}
         </Typography>
 
-        <Typography variant="body2" sx={{ margin: "10px" }}>
-          Remaining: {offer?.remainingOffers} offers
+        <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>
+          <b>Number of offers:</b> {offer?.remainingOffers}
         </Typography>
 
-        <StyledButton
-          startIcon={<Check />}
-          variant="contained"
-          onClick={onAcceptClick}
-        >
-          Accept
-        </StyledButton>
+        <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>
+          <b>Volunteer:</b> {offer?.volunteer}
+          <i>{!offer?.isAnonymous && "  (Wants to remain anonymous)"}</i>
+        </Typography>
 
-        <StyledButton
-          startIcon={<Cancel />}
-          variant="contained"
-          color={"error"}
-          onClick={onDeclineClick}
-        >
-          Decline
-        </StyledButton>
+        <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>
+          <b>Contact Info:</b>
+        </Typography>
+        <Typography variant="body2" sx={{ mt: "5px", mb: "5px", ml: "20px" }}>
+          <b>Phone number:</b> {offer?.phoneNumber}
+        </Typography>
+        <Typography variant="body2" sx={{ mt: "5px", mb: "5px", ml: "20px" }}>
+          <b>E-mail:</b> {offer?.email}
+        </Typography>
+
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <StyledButton
+            startIcon={<Check />}
+            variant="contained"
+            onClick={onAcceptClick}
+          >
+            Accept
+          </StyledButton>
+
+          <StyledButton
+            startIcon={<Cancel />}
+            variant="contained"
+            color={"error"}
+            onClick={onDeclineClick}
+          >
+            Decline
+          </StyledButton>
+        </div>
       </Box>
     </Modal>
   );
