@@ -8,7 +8,7 @@ export const mockOffers = [
     category: "Food",
     location: "Bacau",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2022-05-01"),
   },
   {
     name: "Help 11",
@@ -17,7 +17,7 @@ export const mockOffers = [
     category: "Food",
     location: "Bacau",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2022-05-20"),
   },
   {
     name: "Help 111",
@@ -26,7 +26,7 @@ export const mockOffers = [
     category: "Money",
     location: "Bacau",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2020-04-05"),
   },
   {
     name: "Help 2",
@@ -35,7 +35,7 @@ export const mockOffers = [
     category: "Money",
     location: "Bucuresti",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2020-04-05"),
   },
   {
     name: "Help 3",
@@ -44,7 +44,7 @@ export const mockOffers = [
     category: "Money",
     location: "Suceava",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2020-04-02"),
   },
   {
     name: "Help 4",
@@ -53,7 +53,7 @@ export const mockOffers = [
     category: "Money",
     location: "Brasov",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2022-05-05"),
   },
   {
     name: "Help 5",
@@ -62,7 +62,7 @@ export const mockOffers = [
     category: "Money",
     location: "Bucuresti",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2022-05-05"),
   },
   {
     name: "Help 6",
@@ -71,7 +71,7 @@ export const mockOffers = [
     category: "Money",
     location: "Craiova",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2022-05-06"),
   },
   {
     name: "Help 7",
@@ -80,7 +80,7 @@ export const mockOffers = [
     category: "Food",
     location: "Constanta",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2022-05-07"),
   },
   {
     name: "Help 8",
@@ -89,6 +89,6 @@ export const mockOffers = [
     category: "Accomodation",
     location: "Cluj",
     remainingOffers: 5,
-    date: "25-12-2022",
+    date: new Date("2022-05-04"),
   },
 ];

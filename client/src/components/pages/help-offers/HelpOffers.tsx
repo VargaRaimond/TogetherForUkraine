@@ -1,13 +1,13 @@
 import React, { useMemo, useState } from "react";
 import { PageWrapper } from "../../utils/CommonComponents";
 import { IOfferEntry } from "../get-help/GetHelpPage";
-import { Button, Toolbar } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import GenericTable from "../../utils/table/GenericTable";
 import HelpOffersModal from "./HelpOffersModal";
 import { mockOffers } from "../../0-mock-data/mock-offers";
 
 export interface IHelpOffers extends IOfferEntry {
-  date: string;
+  date: Date;
   phoneNumber: string;
   email: string;
   isAnonymous?: boolean;
@@ -61,14 +61,10 @@ const HelpOffersPage = () => {
 
   return (
     <PageWrapper>
-      <Toolbar
-        sx={{
-          pl: { sm: 2 },
-          pr: { xs: 1, sm: 1 },
-        }}
-      >
+      {/* todo: style this */}
+      <Typography sx={{ pb: "10px", pl: "10px" }}>
         Pending offers: {offers.length}
-      </Toolbar>
+      </Typography>
       <GenericTable rows={offers} headCells={headCells} />
       <HelpOffersModal
         offer={modalOffer}
