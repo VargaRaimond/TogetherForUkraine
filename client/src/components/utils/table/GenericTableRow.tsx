@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { TableCell, TableRow } from "@mui/material";
 import { IGenericTableRow } from "./GenericTable";
 
@@ -19,7 +19,10 @@ const GenericTableRow = ({ row }: IGenericTableRowProps) => {
     <TableRow hover tabIndex={-1} key={row.id}>
       {Object.entries(displayedRowColumns).map(([key, value], idx) => {
         return (
-          <TableCell align="left" key={`${row.id}-${idx}`}>
+          <TableCell
+            align={React.isValidElement(value) ? "center" : "left"}
+            key={`${row.id}-${idx}`}
+          >
             {value}
           </TableCell>
         );

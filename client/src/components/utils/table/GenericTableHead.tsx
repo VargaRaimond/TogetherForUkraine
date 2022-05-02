@@ -1,19 +1,13 @@
 import { MouseEvent } from "react";
 import {
   Box,
-  styled,
   TableCell,
   TableHead,
   TableRow,
   TableSortLabel,
-  Theme,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { Order } from "./GenericTableComparators";
-
-const StyledTableCell = styled(TableCell)(({ theme }: { theme: Theme }) => ({
-  backgroundColor: theme.palette.primary.light,
-}));
 
 export interface HeadCell<HeadCellDataType> {
   id: keyof HeadCellDataType;
@@ -45,11 +39,14 @@ function GenericTableHead<HeadCellDataType>({
     <TableHead>
       <TableRow>
         {headCells.map((headCell) => (
-          <StyledTableCell
+          <TableCell
             key={headCell.id as string}
             align={"left"}
             padding={"normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.light,
+            }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -63,7 +60,7 @@ function GenericTableHead<HeadCellDataType>({
                 </Box>
               ) : null}
             </TableSortLabel>
-          </StyledTableCell>
+          </TableCell>
         ))}
       </TableRow>
     </TableHead>
