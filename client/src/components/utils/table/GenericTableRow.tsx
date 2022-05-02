@@ -15,6 +15,9 @@ const GenericTableRow = ({ row }: IGenericTableRowProps) => {
     return tempRowColumns;
   }, [row]);
 
+  const getValue = (value: any) =>
+    value && value instanceof Date ? value.toDateString() : value;
+
   return (
     <TableRow hover tabIndex={-1} key={row.id}>
       {Object.entries(displayedRowColumns).map(([key, value], idx) => {
@@ -23,7 +26,7 @@ const GenericTableRow = ({ row }: IGenericTableRowProps) => {
             align={React.isValidElement(value) ? "center" : "left"}
             key={`${row.id}-${idx}`}
           >
-            {value}
+            {getValue(value)}
           </TableCell>
         );
       })}
