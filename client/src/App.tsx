@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HeaderMenu from "./components/header-menu/HeaderMenu";
 import GetHelpPage from "./components/pages/get-help/GetHelpPage";
 import ProvideHelpPage from "./components/pages/provide-help/ProvideHelpPage";
+import HomePage from "./components/pages/home-page/HomePage";
 import HelpOffersPage from "./components/pages/help-offers/HelpOffers";
 
 const appTheme = createTheme({
@@ -23,10 +24,6 @@ const appTheme = createTheme({
     },
   },
 });
-
-const HomePage = () => {
-  return <></>;
-};
 
 function App() {
   // Don't delete!
