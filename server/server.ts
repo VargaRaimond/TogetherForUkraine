@@ -36,6 +36,18 @@ app.get("/api/hello", (req, res) => {
   res.send({ message: "Hello" });
 });
 
+app.get("/api/public-message", (req, res) => {
+  res.send({
+    msg: "The API doesn't require an access token to share this message.",
+  });
+});
+
+app.get("/api/private-message", checkJwt, (req, res) => {
+  res.send({
+    msg: "The API successfully validated your access token.",
+  });
+});
+
 // All other unmatched requests will return the React app
 app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
