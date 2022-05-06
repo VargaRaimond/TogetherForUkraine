@@ -6,6 +6,7 @@ import HeaderMenu from "./components/header-menu/HeaderMenu";
 import GetHelpPage from "./components/pages/get-help/GetHelpPage";
 import ProvideHelpPage from "./components/pages/provide-help/ProvideHelpPage";
 import HomePage from "./components/pages/home-page/HomePage";
+import HelpOffersPage from "./components/pages/help-offers/HelpOffers";
 
 const appTheme = createTheme({
   // https://mui.com/customization/palette/
@@ -45,6 +46,7 @@ function App() {
         <Routes>
           <Route path="/get-help" element={<GetHelpPage />} />
           <Route path="/provide-help" element={<ProvideHelpPage />} />
+          <Route path="/help-offers" element={<HelpOffersPage />} />
 
           <Route path="/" element={<HomePage />} />
         </Routes>
