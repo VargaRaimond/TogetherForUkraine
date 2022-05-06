@@ -11,7 +11,7 @@ const StatsGrid = () => {
   };
 
   const getFormattedCount = (count: number) => {
-    if (count > 10000) {
+    if (count >= 10000) {
       return `${(count / 1000).toFixed(2)}k`;
     }
     return count;
