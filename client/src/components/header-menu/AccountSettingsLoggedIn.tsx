@@ -57,12 +57,20 @@ const AccountSettingsLoggedIn = () => {
       >
         <MenuItem
           onClick={() => {
+            handleMenuItemClick("/profile");
+          }}
+        >
+          Profile
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
             logout({ returnTo: window.location.origin });
             handleMenuItemClick("/"); // todo
           }}
         >
           Log Out
         </MenuItem>
+
         {/* TODO */}
         {/*{settings.map(({ name, pathTo }) => (*/}
         {/*  <MenuItem key={name} onClick={() => handleMenuItemClick(pathTo)}>*/}
