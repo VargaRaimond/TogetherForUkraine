@@ -1,17 +1,39 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import * as React from "react";
-import { Button } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
+
+const LoginButton = styled(Button)(() => ({
+  borderColor: "white",
+  color: "white",
+  ":hover": { borderColor: "black", color: "black" },
+  fontWeight: "bold",
+}));
+
+const RegisterButton = styled(Button)(() => ({
+  color: "white",
+  ":hover": { color: "black" },
+}));
 
 const AccountSettingsNotLoggedIn = () => {
   const { loginWithRedirect } = useAuth0();
 
   return (
-    <>
-      <Button variant={"contained"} onClick={() => loginWithRedirect()}>
-        LogIn
-      </Button>
-      <Button variant={"contained"}>Register</Button>
-    </>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+      }}
+    >
+      <LoginButton
+        variant="outlined"
+        onClick={() => loginWithRedirect()}
+        size="large"
+      >
+        Log In
+      </LoginButton>
+      {/* TODO: register button */}
+      <RegisterButton variant="text">Register</RegisterButton>
+    </Box>
   );
 };
 
