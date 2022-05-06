@@ -16,6 +16,7 @@ app.use(express.json());
 // Serve the React static files after build
 app.use(express.static("../client/build"));
 
+// TODO delete: Example + '/api/private message'
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
@@ -34,12 +35,6 @@ app.listen(PORT, () => {
 
 app.get("/api/hello", (req, res) => {
   res.send({ message: "Hello" });
-});
-
-app.get("/api/public-message", (req, res) => {
-  res.send({
-    msg: "The API doesn't require an access token to share this message.",
-  });
 });
 
 app.get("/api/private-message", checkJwt, (req, res) => {
