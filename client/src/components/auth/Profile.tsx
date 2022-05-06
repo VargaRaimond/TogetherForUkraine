@@ -13,6 +13,7 @@ const Profile = () => {
       <img src={user?.picture} alt={user?.name} />
       <h2>{user?.name}</h2>
       <p>{user?.email}</p>
+      <div>{JSON.stringify(user, null, 2)}</div>
     </div>
   ) : (
     <>not auth</>
