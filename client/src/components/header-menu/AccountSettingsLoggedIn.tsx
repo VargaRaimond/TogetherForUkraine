@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import { AccountCircle } from "@mui/icons-material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { getUserRolesObject } from "../utils/auth0-helpers";
+import { getUserRolesObject } from "../utils/authRoles";
 
 const AccountSettingsLoggedIn = () => {
   const { user, logout } = useAuth0();

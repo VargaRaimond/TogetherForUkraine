@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Delete, Send } from "@mui/icons-material";
 import { IOfferEntry } from "./GetHelpPage";
-import { getUserRolesObject } from "../../utils/auth0-helpers";
+import { getUserRolesObject } from "../../utils/authRoles";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const boxStyle = {
