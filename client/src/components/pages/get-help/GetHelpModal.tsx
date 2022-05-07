@@ -90,7 +90,7 @@ const GetHelpModal = ({
           <StyledButton
             startIcon={<Delete />}
             variant="contained"
-            color={"error"}
+            color="error"
           >
             Delete
           </StyledButton>

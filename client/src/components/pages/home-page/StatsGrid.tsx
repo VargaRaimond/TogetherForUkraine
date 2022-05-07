@@ -22,7 +22,7 @@ const StatsGrid = () => {
       container
       rowSpacing={2}
       columnSpacing={{ xs: 1, sm: 1, md: 2 }}
-      justifyContent={"center"}
+      justifyContent="center"
     >
       {[
         { description: "Active Volunteers", count: stats.activeVolunteers },

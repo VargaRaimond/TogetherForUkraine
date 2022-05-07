@@ -105,7 +105,7 @@ const GetHelpFilters = ({
             value={selectedCategory}
             onChange={(e) => onChangeHandler(e, ItemType.CATEGORY)}
           >
-            <MenuItem key={"category"} value={""}>
+            <MenuItem key="category" value="">
               None
             </MenuItem>
             {categories.map((category) => (
@@ -124,7 +124,7 @@ const GetHelpFilters = ({
             value={selectedLocation}
             onChange={(e) => onChangeHandler(e, ItemType.LOCATION)}
           >
-            <MenuItem key={"location"} value={""}>
+            <MenuItem key="location" value="">
               None
             </MenuItem>
             {locations.map((location) => (
@@ -136,7 +136,7 @@ const GetHelpFilters = ({
           <Button
             sx={{ display: "block", marginTop: "10px" }}
             onClick={onSubmitHandler}
-            type={"submit"}
+            type="submit"
           >
             Filter
           </Button>

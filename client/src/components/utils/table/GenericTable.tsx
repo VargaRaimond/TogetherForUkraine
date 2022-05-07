@@ -64,7 +64,7 @@ function GenericTable({ rows: initialRows, headCells }: IGenericTableProps) {
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={"medium"}
+            size="medium"
           >
             <GenericTableHead
               headCells={headCells}

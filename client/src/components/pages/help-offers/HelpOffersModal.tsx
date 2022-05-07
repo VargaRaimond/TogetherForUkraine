@@ -110,7 +110,7 @@ const HelpOffersModal = ({
           <StyledButton
             startIcon={<Cancel />}
             variant="contained"
-            color={"error"}
+            color="error"
             onClick={onDeclineClick}
           >
             Decline

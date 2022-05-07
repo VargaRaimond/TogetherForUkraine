@@ -22,7 +22,7 @@ const ProvideHelpNotAuthenticated = () => {
       </Typography>
       <Box sx={{ flexDirection: "row", marginTop: "25px" }}>
         <Button
-          variant={"outlined"}
+          variant="outlined"
           size="large"
           onClick={() => loginWithRedirect()}
         >
