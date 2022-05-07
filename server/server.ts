@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import personRoutes from "./src/routes/personRoutes";
 
 // https://auth0.com/blog/node-js-and-typescript-tutorial-secure-an-express-api/
 
@@ -28,6 +29,9 @@ const checkJwt = jwt({
   issuer,
   algorithms: ["RS256"],
 });
+
+/** Routes */
+app.use("/api/countries/", personRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

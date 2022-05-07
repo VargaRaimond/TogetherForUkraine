@@ -1,5 +1,3 @@
-// tslint:disable-next-line:no-var-requires
-
 import { knex } from "knex";
 
 export const pg = knex({

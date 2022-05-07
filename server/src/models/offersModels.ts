@@ -1,0 +1,15 @@
+export interface IDbOffer {
+    id: string,
+    person_id: string,
+    title: string,
+    description: string,
+    location: string,
+    category: string,
+    max_refugees_count: number,
+    current_refugees_count: number,
+    is_anonymous: boolean,
+    preffered_contact_method: string,
+    is_approved: boolean,
+    created_at: Date,
+    updated_at: Date,
+}
