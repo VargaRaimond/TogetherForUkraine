@@ -3,6 +3,7 @@ import SmallScreenMenuTabs from "./SmallScreenMenuTabs";
 import LargeScreenMenuTabs from "./LargeScreenMenuTabs";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMemo } from "react";
+import { getUserRoles } from "../auth/helpers";
 
 export interface ILink {
   name: string;
@@ -13,7 +14,11 @@ export interface ILink {
 const allPages: ILink[] = [
   { name: "Home", pathTo: "/" },
   { name: "Get help", pathTo: "/get-help" },
-  { name: "Provide help", pathTo: "/provide-help" },
+  {
+    name: "Provide help",
+    pathTo: "/provide-help",
+    roles: ["guest", "admin", "volunteer"],
+  },
   { name: "Help offers", pathTo: "/help-offers", roles: ["admin"] },
 ];
 
@@ -25,8 +30,7 @@ const MenuTabs = () => {
   );
 
   const pages = useMemo(() => {
-    const namespace = "https://localhost:5001";
-    const userRoles: any[] = user ? user[`${namespace}/roles`] : [];
+    const userRoles = getUserRoles(user);
 
     return allPages.filter(
       ({ roles: pageRoles }) =>

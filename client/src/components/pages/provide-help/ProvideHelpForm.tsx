@@ -26,7 +26,7 @@ interface IProvideHelpData {
   email: string;
 }
 
-const ProvideHelpForm = () => {
+const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const [state, setState] = React.useState<IProvideHelpData>({
     title: "",
     description: "",
@@ -48,161 +48,170 @@ const ProvideHelpForm = () => {
   };
 
   return (
-    <FormControl
-      component="form"
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: { xs: "center", md: "start" },
-        pl: { xs: 0, md: "20%" },
-      }}
-    >
-      <Box
+    <div style={!isAuthenticated ? { filter: "blur(5px)" } : {}}>
+      <FormControl
+        component="form"
         sx={{
-          maxWidth: "500px",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: { xs: "center", md: "start" },
+          pl: { xs: 0, md: "20%" },
         }}
+        disabled={!isAuthenticated}
       >
-        <FormLabel
+        <Box
           sx={{
-            fontSize: "x-large",
-            fontWeight: "bold",
-            color: "text.primary",
+            maxWidth: "500px",
           }}
         >
-          How can you help us?
-        </FormLabel>
-        <FormGroup>
-          <TextField
-            id="provide-help-title"
-            name="title"
-            label="Title"
-            required
-            value={state.title}
-            onChange={handleChange}
-            margin="normal"
-          />
-          <TextField
-            required
-            id="provide-help-description"
-            name="description"
-            label="Description"
-            multiline
-            rows={3}
-            value={state.description}
-            onChange={handleChange}
-            margin="normal"
-          />
-          <TextField
-            required
-            id="provide-help-category"
-            name="category"
-            label="Category"
-            value={state.category}
-            onChange={handleChange}
-            margin="normal"
-          />
-          <TextField
-            required
-            id="provide-help-location"
-            name="location"
-            label="Location"
-            value={state.location}
-            onChange={handleChange}
-            margin="normal"
-          />
-          <TextField
-            required
-            id="provide-help-maxPeopleCount"
-            name="maxPeopleCount"
-            label="maxPeopleCount"
-            value={state.maxPeopleCount}
-            onChange={handleChange}
-            margin="normal"
-            type="number"
-            sx={{ maxWidth: "220px" }}
-          />
-          <FormControl margin="normal">
-            <FormLabel id="provide-help-preferred-contact-method">
-              Preferred contact method
-            </FormLabel>
-            <RadioGroup
-              name="preferredContactMethod"
-              value={state.preferredContactMethod}
-              onChange={handleChange}
-              sx={{ width: "fit-content" }}
-            >
-              <FormControlLabel
-                value="phone-call"
-                control={<Radio sx={{ width: "fit-content" }} />}
-                label="Phone call"
-              />
-              <FormControlLabel
-                value="text-message"
-                control={<Radio sx={{ width: "fit-content" }} />}
-                label="Text message"
-              />
-              <FormControlLabel
-                value="email"
-                control={<Radio sx={{ width: "fit-content" }} />}
-                label="Email"
-              />
-            </RadioGroup>
-          </FormControl>
-
-          {(state.preferredContactMethod === "phone-call" ||
-            state.preferredContactMethod === "text-message") && (
+          <FormLabel
+            sx={{
+              fontSize: "x-large",
+              fontWeight: "bold",
+              color: "text.primary",
+            }}
+          >
+            How can you help us?
+          </FormLabel>
+          <FormGroup>
             <TextField
+              id="provide-help-title"
+              name="title"
+              label="Title"
               required
-              id="provide-help-phone-number"
-              name="phoneNumber"
-              label="Phone number"
-              value={state.phoneNumber}
+              value={state.title}
               onChange={handleChange}
               margin="normal"
-              type="tel"
+              disabled={!isAuthenticated}
+            />
+            <TextField
+              required
+              id="provide-help-description"
+              name="description"
+              label="Description"
+              multiline
+              rows={3}
+              value={state.description}
+              onChange={handleChange}
+              margin="normal"
+              disabled={!isAuthenticated}
+            />
+            <TextField
+              required
+              id="provide-help-category"
+              name="category"
+              label="Category"
+              value={state.category}
+              onChange={handleChange}
+              margin="normal"
+              disabled={!isAuthenticated}
+            />
+            <TextField
+              required
+              id="provide-help-location"
+              name="location"
+              label="Location"
+              value={state.location}
+              onChange={handleChange}
+              margin="normal"
+              disabled={!isAuthenticated}
+            />
+            <TextField
+              required
+              id="provide-help-maxPeopleCount"
+              name="maxPeopleCount"
+              label="maxPeopleCount"
+              value={state.maxPeopleCount}
+              onChange={handleChange}
+              margin="normal"
+              type="number"
               sx={{ maxWidth: "220px" }}
+              disabled={!isAuthenticated}
             />
-          )}
-
-          {state.preferredContactMethod === "email" && (
-            <TextField
-              required
-              id="provide-help-email"
-              name="email"
-              label="Email address"
-              value={state.email}
-              onChange={handleChange}
-              margin="normal"
-              type="email"
-            />
-          )}
-
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="isAnonymous"
-                value={state.isAnonymous}
+            <FormControl margin="normal" disabled={!isAuthenticated}>
+              <FormLabel id="provide-help-preferred-contact-method">
+                Preferred contact method
+              </FormLabel>
+              <RadioGroup
+                name="preferredContactMethod"
+                value={state.preferredContactMethod}
                 onChange={handleChange}
-              />
-            }
-            label="Do you want to remain anonymous?"
-            sx={{ width: "fit-content" }}
-          />
-        </FormGroup>
-        <FormHelperText sx={{ marginTop: "15px" }}>
-          * Please check if your contact info is correct on your profile before
-          clicking submit
-        </FormHelperText>
+                sx={{ width: "fit-content" }}
+              >
+                <FormControlLabel
+                  value="phone-call"
+                  control={<Radio sx={{ width: "fit-content" }} />}
+                  label="Phone call"
+                />
+                <FormControlLabel
+                  value="text-message"
+                  control={<Radio sx={{ width: "fit-content" }} />}
+                  label="Text message"
+                />
+                <FormControlLabel
+                  value="email"
+                  control={<Radio sx={{ width: "fit-content" }} />}
+                  label="Email"
+                />
+              </RadioGroup>
+            </FormControl>
 
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{ width: "100%", margin: "5px" }}
-        >
-          Submit
-        </Button>
-      </Box>
-    </FormControl>
+            {(state.preferredContactMethod === "phone-call" ||
+              state.preferredContactMethod === "text-message") && (
+              <TextField
+                required
+                id="provide-help-phone-number"
+                name="phoneNumber"
+                label="Phone number"
+                value={state.phoneNumber}
+                onChange={handleChange}
+                margin="normal"
+                type="tel"
+                sx={{ maxWidth: "220px" }}
+              />
+            )}
+
+            {state.preferredContactMethod === "email" && (
+              <TextField
+                required
+                id="provide-help-email"
+                name="email"
+                label="Email address"
+                value={state.email}
+                onChange={handleChange}
+                margin="normal"
+                type="email"
+              />
+            )}
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="isAnonymous"
+                  value={state.isAnonymous}
+                  onChange={handleChange}
+                />
+              }
+              label="Do you want to remain anonymous?"
+              sx={{ width: "fit-content" }}
+            />
+          </FormGroup>
+          <FormHelperText sx={{ marginTop: "15px" }}>
+            * Please check if your contact info is correct on your profile
+            before clicking submit
+          </FormHelperText>
+
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{ width: "100%", margin: "5px" }}
+            disabled={!isAuthenticated}
+          >
+            Submit
+          </Button>
+        </Box>
+      </FormControl>
+    </div>
   );
 };
 
