@@ -1,11 +1,12 @@
 import express from "express";
 import path from "path";
-import personRoutes from "./src/routes/personRoutes";
 
 // https://auth0.com/blog/node-js-and-typescript-tutorial-secure-an-express-api/
 
 import { expressjwt as jwt } from "express-jwt";
 import jwksRsa from "jwks-rsa";
+import offersRoutes from "./src/routes/offersRoutes";
+import personRoutes from "./src/routes/personRoutes";
 
 const PORT = process.env.PORT || 5001;
 const audience = process.env.AUTH0_AUDIENCE || "http://together-for-ukraine";
@@ -32,6 +33,7 @@ const checkJwt = jwt({
 
 /** Routes */
 app.use("/api/countries/", personRoutes);
+app.use("/api/countries/", offersRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

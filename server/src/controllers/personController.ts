@@ -38,6 +38,7 @@ export default class PersonController extends Controller {
         return convertPersonDbToApi(person.pop());
     }
 
+    // TODO Change update to work with PARTIAL models
     @Put()
     public async updatePerson(
         @Path() id: string,

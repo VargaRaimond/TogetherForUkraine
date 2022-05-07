@@ -13,8 +13,8 @@ export interface IDbPerson {
 export interface INewPerson {
     auth_id: string,
     name: string,
-    email_contact?: string,
-    phone_number?: string,
+    email_contact: string,
+    phone_number: string,
 }
 
 export interface IPerson {
@@ -36,16 +36,16 @@ export interface IPersonContact {
 export const validateNewPerson = yup.object({
     auth_id: yup.string().required(),
     name: yup.string().required(),
-    email_contact: yup.string(),
-    phone_number: yup.string(),
+    email_contact: yup.string().required(),
+    phone_number: yup.string().required(),
 });
 
 export const validatePerson = yup.object({
     id: yup.string().required(),
     auth_id: yup.string().required(),
     name: yup.string().required(),
-    email_contact: yup.string(),
-    phone_number: yup.string(),
+    email_contact: yup.string().required(),
+    phone_number: yup.string().required(),
 });
 
 export const convertPersonApiToDb: (person: IPerson) => IDbPerson = (person) => ({
@@ -58,7 +58,7 @@ export const convertPersonApiToDb: (person: IPerson) => IDbPerson = (person) => 
     updated_at: person.updatedAt,
 });
 
-export const convertPersonDbToApi: (city: IDbPerson) => IPerson = (person) => ({
+export const convertPersonDbToApi: (person: IDbPerson) => IPerson = (person) => ({
     id: person.id,
     authId: person.auth_id,
     name: person.name,
