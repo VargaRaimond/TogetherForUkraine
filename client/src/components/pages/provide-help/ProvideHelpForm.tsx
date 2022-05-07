@@ -134,7 +134,7 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
               sx={{ maxWidth: "220px" }}
               disabled={!isAuthenticated}
             />
-            <FormControl margin="normal" disabled={!isAuthenticated}>
+            <FormControl margin="normal" required disabled={!isAuthenticated}>
               <FormLabel id="provide-help-preferred-contact-method">
                 Preferred contact method
               </FormLabel>

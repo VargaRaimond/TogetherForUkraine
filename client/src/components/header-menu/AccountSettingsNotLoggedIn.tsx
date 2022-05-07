@@ -31,8 +31,13 @@ const AccountSettingsNotLoggedIn = () => {
       >
         Log In
       </LoginButton>
-      {/* TODO: register button */}
-      <RegisterButton variant="text">Register</RegisterButton>
+      {/* TODO: AFTER register -> select role + add info */}
+      <RegisterButton
+        variant="text"
+        onClick={() => loginWithRedirect({ screen_hint: "signup" })}
+      >
+        Register
+      </RegisterButton>
     </Box>
   );
 };

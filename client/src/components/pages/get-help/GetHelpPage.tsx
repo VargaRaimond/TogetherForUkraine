@@ -36,6 +36,7 @@ const GetHelpPage = () => {
 
   const initialOffers = useMemo(
     () =>
+      // TODO db: fetch offers
       staticRows.map((offer) => ({
         ...offer,
         seeMore: (

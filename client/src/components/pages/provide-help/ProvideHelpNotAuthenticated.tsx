@@ -28,8 +28,11 @@ const ProvideHelpNotAuthenticated = () => {
         >
           Log in
         </Button>
-        {/* TODO: register button */}
-        <Button size="large" variant="text">
+        <Button
+          size="large"
+          variant="text"
+          onClick={() => loginWithRedirect({ screen_hint: "signup" })}
+        >
           Register
         </Button>
       </Box>
