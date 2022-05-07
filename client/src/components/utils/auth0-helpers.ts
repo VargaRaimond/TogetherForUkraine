@@ -6,3 +6,42 @@ export const getUserRoles: (user: User | undefined) => string[] = (user) => {
 
   return userRoles;
 };
+
+export interface IRolesObject {
+  isVolunteer: boolean;
+  isAdmin: boolean;
+  isRefugee: boolean;
+  isGuest: boolean;
+}
+
+export const getUserRolesObject: (user: User | undefined) => IRolesObject = (
+  user
+) => {
+  const namespace = "https://localhost:5001";
+  const userRoles: any[] = user ? user[`${namespace}/roles`] : ["guest"];
+
+  const roles = {
+    isVolunteer: false,
+    isAdmin: false,
+    isRefugee: false,
+    isGuest: false,
+  };
+
+  userRoles.forEach((role) => {
+    switch (role) {
+      case "volunteer":
+        roles.isVolunteer = true;
+        break;
+      case "admin":
+        roles.isAdmin = true;
+        break;
+      case "refugee":
+        roles.isRefugee = true;
+        break;
+      case "guest":
+        roles.isGuest = true;
+    }
+  });
+
+  return roles;
+};
