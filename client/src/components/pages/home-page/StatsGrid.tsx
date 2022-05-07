@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
+import CountUp from "react-countup";
 
 const StatsGrid = () => {
   // TODO db: get this from somewhere
@@ -14,7 +15,7 @@ const StatsGrid = () => {
     if (count >= 10000) {
       return `${(count / 1000).toFixed(2)}k`;
     }
-    return count;
+    return `${count}`;
   };
 
   return (
@@ -47,13 +48,22 @@ const StatsGrid = () => {
               <Typography variant="h6" align="center">
                 {description}
               </Typography>
-              <Typography
-                variant="h2"
-                color="text.secondary"
-                sx={{ fontWeight: "bold" }}
+              <CountUp
+                start={0}
+                end={count}
+                delay={0}
+                duration={1.0}
+                formattingFn={getFormattedCount}
               >
-                {getFormattedCount(count)}
-              </Typography>
+                {({ countUpRef }) => (
+                  <Typography
+                    variant="h2"
+                    color="text.secondary"
+                    sx={{ fontWeight: "bold" }}
+                    ref={countUpRef}
+                  />
+                )}
+              </CountUp>
             </CardContent>
           </Card>
         </Grid>
