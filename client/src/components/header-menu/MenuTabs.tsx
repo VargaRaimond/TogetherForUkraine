@@ -1,14 +1,14 @@
 import * as React from "react";
+import { useMemo } from "react";
 import SmallScreenMenuTabs from "./SmallScreenMenuTabs";
 import LargeScreenMenuTabs from "./LargeScreenMenuTabs";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useMemo } from "react";
-import { getUserRoles } from "../utils/auth0-helpers";
+import { getUserRoles, UserRoles } from "../utils/auth0-helpers";
 
 export interface ILink {
   name: string;
   pathTo: string;
-  roles?: string[]; // If it's undefined, it can be seen by any role
+  roles?: UserRoles[]; // If it's undefined, it can be seen by any role
 }
 
 const allPages: ILink[] = [
@@ -17,9 +17,13 @@ const allPages: ILink[] = [
   {
     name: "Provide help",
     pathTo: "/provide-help",
-    roles: ["guest", "admin", "volunteer"],
+    roles: [UserRoles.Guest, UserRoles.Admin, UserRoles.Volunteer],
   },
-  { name: "Help offers", pathTo: "/help-offers", roles: ["admin"] },
+  {
+    name: "Help offers",
+    pathTo: "/help-offers",
+    roles: [UserRoles.Admin],
+  },
 ];
 
 const MenuTabs = () => {
