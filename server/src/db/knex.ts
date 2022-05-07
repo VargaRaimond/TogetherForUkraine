@@ -1,5 +1,8 @@
 // tslint:disable-next-line:no-var-requires
-export const pg = require("knex")({
+
+import { knex } from "knex";
+
+export const pg = knex({
     client: "postgres",
     connection: {
         password: process.env.DB_PASSWORD,
