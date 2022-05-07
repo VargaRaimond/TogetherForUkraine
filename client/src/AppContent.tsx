@@ -28,6 +28,7 @@ const AppContent = () => {
       ) : (
         <Routes>
           {/*
+          TODO delete this
           GET HELP:
             * get-offers -> /offers/
             * apply -> /usages/
