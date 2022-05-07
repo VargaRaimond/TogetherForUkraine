@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import { Delete, Send } from "@mui/icons-material";
 import { IOfferEntry } from "./GetHelpPage";
+import { getUserRolesObject } from "../../utils/authRoles";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const boxStyle = {
   display: "flex",
@@ -38,7 +40,12 @@ const GetHelpModal = ({
   handleClose: (open: boolean) => void;
   offer?: IOfferEntry;
 }) => {
+  const { user } = useAuth0();
   const open = useMemo(() => !!offer, [offer]);
+
+  const { isAdmin, isRefugee } = useMemo(() => {
+    return getUserRolesObject(user);
+  }, [user]);
 
   return (
     <Modal
@@ -71,21 +78,23 @@ const GetHelpModal = ({
           Remaining: {offer?.remainingOffers} offers
         </Typography>
 
-        {/* TODO role: only for refugees */}
         {/* TODO onClick modal: Send */}
-        <StyledButton endIcon={<Send />} variant="contained">
-          Apply now
-        </StyledButton>
+        {isRefugee && (
+          <StyledButton endIcon={<Send />} variant="contained">
+            Apply now
+          </StyledButton>
+        )}
 
-        {/* TODO role: only for admin */}
         {/* TODO onClick modal: Delete */}
-        <StyledButton
-          startIcon={<Delete />}
-          variant="contained"
-          color={"error"}
-        >
-          Delete
-        </StyledButton>
+        {isAdmin && (
+          <StyledButton
+            startIcon={<Delete />}
+            variant="contained"
+            color={"error"}
+          >
+            Delete
+          </StyledButton>
+        )}
       </Box>
     </Modal>
   );

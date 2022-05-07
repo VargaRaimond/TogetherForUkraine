@@ -30,7 +30,7 @@ const StatsGrid = () => {
         { description: "Active Offers", count: stats.activeOffers },
         { description: "Total Offers", count: stats.totalOffers },
       ].map(({ description, count }) => (
-        <Grid item xs={4.75} md={2.8}>
+        <Grid item xs={4.75} md={2.8} key={description}>
           <Card
             elevation={5}
             sx={{ backgroundColor: (theme) => theme.palette.primary.light }}

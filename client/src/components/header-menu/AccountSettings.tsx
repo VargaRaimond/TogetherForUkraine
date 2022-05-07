@@ -1,58 +1,17 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import { AccountCircle } from "@mui/icons-material";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-
-// TODO: stop using this / update this
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { useAuth0 } from "@auth0/auth0-react";
+import AccountSettingsLoggedIn from "./AccountSettingsLoggedIn";
+import AccountSettingsNotLoggedIn from "./AccountSettingsNotLoggedIn";
 
 const AccountSettings = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const { isAuthenticated, isLoading } = useAuth0();
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  if (isLoading) return <div>Loading...</div>;
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  return (
-    <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu}>
-          <AccountCircle fontSize={"large"} />
-        </IconButton>
-      </Tooltip>
-      <Menu
-        sx={{ mt: "45px" }}
-        id="menu-appbar"
-        anchorEl={anchorElUser}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
-    </Box>
+  return isAuthenticated ? (
+    <AccountSettingsLoggedIn />
+  ) : (
+    <AccountSettingsNotLoggedIn />
   );
 };
 

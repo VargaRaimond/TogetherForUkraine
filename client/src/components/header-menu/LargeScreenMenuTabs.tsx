@@ -48,7 +48,8 @@ const LargeScreenMenuTabs = ({
               my: 2,
               color: "white",
               display: "block",
-              paddingLeft: "25px",
+              paddingRight: "15px",
+              paddingLeft: "15px",
             }}
           >
             {page.name}
