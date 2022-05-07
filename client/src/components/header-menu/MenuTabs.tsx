@@ -3,7 +3,7 @@ import SmallScreenMenuTabs from "./SmallScreenMenuTabs";
 import LargeScreenMenuTabs from "./LargeScreenMenuTabs";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMemo } from "react";
-import { getUserRoles } from "../auth/helpers";
+import { getUserRoles } from "../utils/auth0-helpers";
 
 export interface ILink {
   name: string;
