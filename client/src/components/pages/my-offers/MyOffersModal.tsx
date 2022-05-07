@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Backdrop,
   Box,
@@ -8,7 +8,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import { Edit, Check } from "@mui/icons-material";
 import { IMyOffers } from "./MyOffersPage";
 
 const boxStyle = {
@@ -48,58 +48,6 @@ const HelpOffersModal = ({
     extHandleClose();
   };
 
-  const DescriptionWithEditEnabled = useCallback(() => {
-    return (
-      <>
-        <TextField
-          multiline
-          value={description}
-          sx={{ width: "100%" }}
-          onChange={(event) => {
-            setDescription(event.target.value);
-          }}
-          error={description === ""}
-          helperText={description === "" ? "Description required" : ""}
-        />
-        <Tooltip title="Edit description">
-          <IconButton
-            color="primary"
-            size="small"
-            sx={{ alignSelf: "center" }}
-            onClick={() => {
-              // todo db: UPDATE
-              if (description !== "") setEdit(false);
-            }}
-          >
-            <Edit />
-          </IconButton>
-        </Tooltip>
-      </>
-    );
-  }, [description]);
-
-  const DescriptionWithEditDisabled = useCallback(() => {
-    return (
-      <>
-        <Typography variant="body1" sx={{ margin: "10px" }}>
-          {description}
-        </Typography>
-        <Tooltip title="Edit description">
-          <IconButton
-            color="primary"
-            size="small"
-            sx={{ alignSelf: "center" }}
-            onClick={() => {
-              setEdit(true);
-            }}
-          >
-            <Edit />
-          </IconButton>
-        </Tooltip>
-      </>
-    );
-  }, [description]);
-
   return (
     <Modal
       aria-labelledby="offer-modal"
@@ -125,9 +73,51 @@ const HelpOffersModal = ({
 
         <div style={{ display: "flex" }}>
           {edit ? (
-            <DescriptionWithEditEnabled />
+            <>
+              <TextField
+                multiline
+                value={description}
+                sx={{ width: "100%" }}
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
+                error={description === ""}
+                helperText={description === "" ? "Description required" : ""}
+              />
+              <Tooltip title="Edit description">
+                <IconButton
+                  color="success"
+                  size="small"
+                  sx={{ alignSelf: "center" }}
+                  onClick={() => {
+                    // todo db: UPDATE offer
+                    if (description !== "") setEdit(false);
+                  }}
+                >
+                  <Check />
+                </IconButton>
+              </Tooltip>
+            </>
           ) : (
-            <DescriptionWithEditDisabled />
+            <>
+              <Typography variant="body1" sx={{ margin: "10px" }}>
+                {description}
+              </Typography>
+              {!offer?.isAccepted && (
+                <Tooltip title="Edit description">
+                  <IconButton
+                    color="primary"
+                    size="small"
+                    sx={{ alignSelf: "center" }}
+                    onClick={() => {
+                      setEdit(true);
+                    }}
+                  >
+                    <Edit />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </>
           )}
         </div>
 
