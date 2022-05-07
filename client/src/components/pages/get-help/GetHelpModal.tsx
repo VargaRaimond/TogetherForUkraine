@@ -11,6 +11,7 @@ import { Delete, Send } from "@mui/icons-material";
 import { IOfferEntry } from "./GetHelpPage";
 import { getUserRolesObject } from "../../utils/authRoles";
 import { useAuth0 } from "@auth0/auth0-react";
+import IncompleteProfileNote from "./IncompleteProfileNote";
 
 const boxStyle = {
   display: "flex",
@@ -47,6 +48,9 @@ const GetHelpModal = ({
     return getUserRolesObject(user);
   }, [user]);
 
+  // TODO: actually check if the profile is complete or not
+  const hasIncompleteProfile = true;
+
   return (
     <Modal
       aria-labelledby="offer-modal"
@@ -80,9 +84,16 @@ const GetHelpModal = ({
 
         {/* TODO onClick modal: Send */}
         {isRefugee && (
-          <StyledButton endIcon={<Send />} variant="contained">
-            Apply now
-          </StyledButton>
+          <>
+            <StyledButton
+              endIcon={<Send />}
+              variant="contained"
+              disabled={hasIncompleteProfile}
+            >
+              Apply now
+            </StyledButton>
+            {hasIncompleteProfile && <IncompleteProfileNote />}
+          </>
         )}
 
         {/* TODO onClick modal: Delete */}
