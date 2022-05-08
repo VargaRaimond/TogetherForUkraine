@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import GetHelpPage from "./components/pages/get-help/GetHelpPage";
 import ProvideHelpPage from "./components/pages/provide-help/ProvideHelpPage";
 import HelpOffersPage from "./components/pages/help-offers/HelpOffers";
-import ProfilePage from "./components/pages/ProfilePage";
+import ProfilePage from "./components/pages/profile-page/ProfilePage";
 import RegisterPage from "./components/pages/RegisterPage";
 import HomePage from "./components/pages/home-page/HomePage";
 import { useAuth0 } from "@auth0/auth0-react";
