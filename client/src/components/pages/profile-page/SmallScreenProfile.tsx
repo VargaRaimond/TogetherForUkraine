@@ -33,6 +33,7 @@ const SmallScreenProfile = () => {
           sx={{
             maxWidth: "100px",
             maxHeight: "100px",
+            paddingRight: "45px",
           }}
         />
       </div>
