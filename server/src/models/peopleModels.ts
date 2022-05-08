@@ -40,9 +40,9 @@ export const validateNewPerson = yup.object({
 
 export const validatePerson = yup.object({
     id: yup.string().required(),
-    name: yup.string().required(),
-    email_contact: yup.string().required(),
-    phone_number: yup.string().required(),
+    name: yup.string(),
+    email_contact: yup.string(),
+    phone_number: yup.string(),
 });
 
 export const convertPersonApiToDb: (person: IPerson) => IDbPerson = (person) => ({

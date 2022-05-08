@@ -66,9 +66,9 @@ export async function addNewEntry<Type, NewType, DbType>(
 export async function updateEntry<Type extends { id: string }, DbType>(
     tableName: string,
     id: string,
-    data: Type,
+    data: Partial<Type>,
     validationSchema: SchemaOf<any>,
-    convertApiToDbMethod: (arg: Type) => DbType,
+    convertApiToDbMethod: (arg: Partial<Type>) => Partial<DbType>,
     res: Response
 ) {
     if (!data.id || id !== data.id) {
@@ -80,7 +80,7 @@ export async function updateEntry<Type extends { id: string }, DbType>(
         await validationSchema.validate(data);
 
         // Update entry if it exists
-        const dbData: DbType = convertApiToDbMethod(data);
+        const dbData: Partial<DbType> = convertApiToDbMethod(data);
         await updateOne(tableName, id, dbData);
     } catch (e) {
         // validation failed -> 400 Bad request

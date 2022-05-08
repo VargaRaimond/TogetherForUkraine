@@ -7,6 +7,7 @@ import { expressjwt as jwt } from "express-jwt";
 import jwksRsa from "jwks-rsa";
 import offersRoutes from "./src/routes/offersRoutes";
 import personRoutes from "./src/routes/personRoutes";
+import usagesRoutes from "./src/routes/usagesRoutes";
 
 const PORT = process.env.PORT || 5001;
 const audience = process.env.AUTH0_AUDIENCE || "http://together-for-ukraine";
@@ -31,13 +32,14 @@ const checkJwt = jwt({
   algorithms: ["RS256"],
 });
 
-/** Routes */
-app.use("/api/countries/", personRoutes);
-app.use("/api/countries/", offersRoutes);
-
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+/** Routes */
+app.use("/api/person/", personRoutes);
+app.use("/api/offers/", offersRoutes);
+app.use("/api/usages/", usagesRoutes);
 
 app.get("/api/hello", (req, res) => {
   res.send({ message: "Hello" });

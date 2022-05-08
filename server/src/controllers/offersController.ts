@@ -48,7 +48,7 @@ export default class OffersController extends Controller {
     @Put()
     public async acceptOffer(
         @Path() id: string,
-        @Body() offerData: IOffer,
+        @Body() offerData: Partial<IOffer>,
         res: Response
     ): Promise<void> {
         await updateEntry<IOffer, IDbOffer>(

@@ -58,18 +58,18 @@ export const validateNewOffer = yup.object({
 
 export const validateOffer = yup.object({
     id: yup.string().required(),
-    person_id: yup.string().required(),
-    title: yup.string().required(),
-    description: yup.string().required(),
-    location: yup.string().required(),
-    category: yup.string().required(),
-    max_refugees_count: yup.number().required(),
-    current_refugees_count: yup.number().required(),
-    is_anonymous: yup.boolean().required(),
-    preffered_contact_method: yup.string().required(),
-    is_approved: yup.boolean().required(),
-    created_at: yup.date().required(),
-    updated_at: yup.date().required()
+    person_id: yup.string(),
+    title: yup.string(),
+    description: yup.string(),
+    location: yup.string(),
+    category: yup.string(),
+    max_refugees_count: yup.number(),
+    current_refugees_count: yup.number(),
+    is_anonymous: yup.boolean(),
+    preffered_contact_method: yup.string(),
+    is_approved: yup.boolean(),
+    created_at: yup.date(),
+    updated_at: yup.date()
 });
 
 export const convertOfferApiToDb: (offer: IOffer) => IDbOffer = (offer) => ({

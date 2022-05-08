@@ -38,11 +38,10 @@ export default class PersonController extends Controller {
         return convertPersonDbToApi(person.pop());
     }
 
-    // TODO Change update to work with PARTIAL models
     @Put()
     public async updatePerson(
         @Path() id: string,
-        @Body() personData: IPerson,
+        @Body() personData: Partial<IPerson>,
         res: Response
     ): Promise<void> {
         await updateEntry<IPerson, IDbPerson>(
