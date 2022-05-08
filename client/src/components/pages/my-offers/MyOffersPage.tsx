@@ -62,7 +62,7 @@ const MyOffersPage = () => {
   const [offers, setOffers] = useState<IMyOffer[]>(initialOffers);
 
   const handleDelete = (offerToBeRemoved: IMyOffer) => {
-    setOffers(offers.filter((offer) => offer.name !== offerToBeRemoved.name));
+    setOffers(offers.filter((offer) => offer.id !== offerToBeRemoved.id));
     setOfferToBeDeleted(undefined);
   };
 

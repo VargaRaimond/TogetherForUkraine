@@ -1,6 +1,7 @@
 // Name generator: https://www.behindthename.com/random/random.php?gender=both&number=2&sets=1&surname=&usage_rmn=1
 export const mockOffers = [
   {
+    id: "1",
     name: "Help 1",
     description:
       "Volunteers are individuals who freely offer their time, labor, and expertise. Volunteers often work for schools or NGOs, where they typically receive training and report to designated senior staff. Completely free trial, no card required.",
@@ -11,6 +12,7 @@ export const mockOffers = [
     date: new Date("2022-05-01"),
   },
   {
+    id: "2",
     name: "Help 11",
     description: "",
     volunteer: "Judith Marcel",
@@ -20,6 +22,7 @@ export const mockOffers = [
     date: new Date("2022-05-20"),
   },
   {
+    id: "3",
     name: "Help 111",
     description: "",
     volunteer: "Robin Fulvio",
@@ -29,6 +32,7 @@ export const mockOffers = [
     date: new Date("2020-04-05"),
   },
   {
+    id: "3",
     name: "Help 2",
     description: "",
     volunteer: "Gianmarco Colombo",
@@ -38,6 +42,7 @@ export const mockOffers = [
     date: new Date("2020-04-05"),
   },
   {
+    id: "4",
     name: "Help 3",
     description: "",
     volunteer: "Marie-Françoise Serafina",
@@ -47,6 +52,7 @@ export const mockOffers = [
     date: new Date("2020-04-02"),
   },
   {
+    id: "5",
     name: "Help 4",
     description: "",
     volunteer: "Marie-Françoise Serafina",
@@ -56,6 +62,7 @@ export const mockOffers = [
     date: new Date("2022-05-05"),
   },
   {
+    id: "6",
     name: "Help 5",
     description: "",
     volunteer: "Sara Sandu",
@@ -65,6 +72,7 @@ export const mockOffers = [
     date: new Date("2022-05-05"),
   },
   {
+    id: "7",
     name: "Help 6",
     description: "",
     volunteer: "Delia Catrinel",
@@ -74,6 +82,7 @@ export const mockOffers = [
     date: new Date("2022-05-06"),
   },
   {
+    id: "8",
     name: "Help 7",
     description: "Tereza Denisa",
     volunteer: "Marie-Françoise Serafina",
@@ -83,6 +92,7 @@ export const mockOffers = [
     date: new Date("2022-05-07"),
   },
   {
+    id: "9",
     name: "Help 8",
     description: "",
     volunteer: "Marie-Françoise Serafina",

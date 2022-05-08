@@ -51,12 +51,12 @@ const HelpOffersPage = () => {
 
   const handleOfferAccept = (offer: IHelpOffers) => {
     // TODO db: handle accept
-    setOffers(offers.filter((o) => o.name !== offer.name));
+    setOffers(offers.filter((o) => o.id !== offer.id));
   };
 
   const handleOfferDecline = (offer: IHelpOffers) => {
     // TODO db: handle decline
-    setOffers(offers.filter((o) => o.name !== offer.name));
+    setOffers(offers.filter((o) => o.id !== offer.id));
   };
 
   return (
