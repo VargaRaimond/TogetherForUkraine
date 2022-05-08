@@ -28,7 +28,7 @@ function GenericTable({ rows: initialRows, headCells }: IGenericTableProps) {
   const [orderBy, setOrderBy] = useState<keyof IGenericTableRow>("id");
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (
     event: MouseEvent<unknown>,

@@ -7,6 +7,7 @@ import { PageWrapper } from "../../utils/CommonComponents";
 import { mockOffers } from "../../0-mock-data/mock-offers";
 
 export interface IOfferEntry {
+  id: string;
   name: string;
   description: string;
   volunteer: string;

@@ -10,6 +10,7 @@ import HomePage from "./components/pages/home-page/HomePage";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getUserRoles } from "./components/utils/authRoles";
 import LoadingScreen from "./components/utils/LoadingScreen";
+import MyOffersPage from "./components/pages/my-offers/MyOffersPage";
 
 const AppContent = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -51,7 +52,7 @@ const AppContent = () => {
           <Route path="/provide-help" element={<ProvideHelpPage />} />
           <Route path="/help-offers" element={<HelpOffersPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/my-offers" element={<div>TODO: My offers</div>} />
+          <Route path="/my-offers" element={<MyOffersPage />} />
 
           <Route path="/" element={<HomePage />} />
         </Routes>
