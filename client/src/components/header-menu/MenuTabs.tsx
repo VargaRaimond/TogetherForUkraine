@@ -27,7 +27,7 @@ const allPages: ILink[] = [
 ];
 
 const MenuTabs = () => {
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -35,6 +35,9 @@ const MenuTabs = () => {
 
   const pages = useMemo(() => {
     const userRoles = getUserRoles(user);
+    if (userRoles.length === 0 || isLoading) {
+      return [];
+    }
 
     return allPages.filter(
       ({ roles: pageRoles }) =>
@@ -43,7 +46,7 @@ const MenuTabs = () => {
           userRoles.some((userRole) => userRole === pageRole)
         )
     );
-  }, [user]);
+  }, [isLoading, user]);
 
   return (
     <>
