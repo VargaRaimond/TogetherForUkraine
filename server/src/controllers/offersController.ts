@@ -3,13 +3,15 @@ import { addNewEntry, deleteEntry, updateEntry } from "../db/services";
 import { Response } from "express";
 import { pg } from "../db/knex";
 import {
+    convertNewOfferApiToDb,
     convertOfferApiToDb,
-    convertOfferDbToApi,
+    convertOfferDbToApi, IDbNewOffer,
     IDbOffer,
     INewOffer,
     IOffer,
     validateNewOffer, validateOffer
 } from "../models/offersModels";
+import {deleteUsagesForOffer} from "../services/usagesServices";
 
 @Route("offers")
 @Tags("Offers")
@@ -21,11 +23,11 @@ export default class OffersController extends Controller {
         @Body() offerData: INewOffer,
         res: Response
     ): Promise<void> {
-        return await addNewEntry<IOffer, INewOffer, IDbOffer>(
+        return await addNewEntry<INewOffer, INewOffer, IDbNewOffer>(
             this.TABLE,
             offerData,
             validateNewOffer,
-            convertOfferApiToDb,
+            convertNewOfferApiToDb,
             res
         );
     }
@@ -44,25 +46,39 @@ export default class OffersController extends Controller {
         return offers.map(convertOfferDbToApi);
     }
 
-    // TODO Change update to work with PARTIAL models
+    @Get()
+    public async getPersonOffers(
+        @Path() personId: string,
+    ): Promise<IOffer[]> {
+        const offers: IDbOffer[] = await pg(this.TABLE).select("*").where({person_id: personId});
+        return offers.map(convertOfferDbToApi);
+    }
+
     @Put()
     public async acceptOffer(
-        @Path() id: string,
+        @Path() offerId: string
+    ): Promise<void> {
+        await pg(this.TABLE).update({is_approved: true}, null, { includeTriggerModifications: true }).where({id: offerId});
+    }
+
+    @Put()
+    public async updateOffer(
+        @Path() offerId: string,
         @Body() offerData: Partial<IOffer>,
         res: Response
     ): Promise<void> {
         await updateEntry<IOffer, IDbOffer>(
             this.TABLE,
-            id,
+            offerId,
             offerData,
             validateOffer,
             convertOfferApiToDb,
             res
-        );
-    }
+        );}
 
     @Delete()
-    public async deleteOffer(@Path() id: string, res: Response): Promise<void> {
-        await deleteEntry(this.TABLE, id, res);
+    public async deleteOffer(@Path() offerId: string, res: Response): Promise<void> {
+        await deleteUsagesForOffer(offerId);
+        await deleteEntry(this.TABLE, offerId, res);
     }
 }

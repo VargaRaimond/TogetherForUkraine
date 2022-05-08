@@ -14,6 +14,13 @@ router.post(
 router.get(
     "/:id/contact",
     routesHelper((req, _) =>
+        controller.getPersonContact(req.params.id)
+    )
+);
+
+router.get(
+    "/:id",
+    routesHelper((req, _) =>
         controller.getPerson(req.params.id)
     )
 );

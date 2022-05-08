@@ -71,10 +71,6 @@ export async function updateEntry<Type extends { id: string }, DbType>(
     convertApiToDbMethod: (arg: Partial<Type>) => Partial<DbType>,
     res: Response
 ) {
-    if (!data.id || id !== data.id) {
-        res.status(400);
-    }
-
     try {
         // Validate path and body
         await validationSchema.validate(data);

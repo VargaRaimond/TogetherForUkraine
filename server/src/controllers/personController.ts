@@ -3,8 +3,9 @@ import { addNewEntry, deleteEntry, updateEntry } from "../db/services";
 import { Response } from "express";
 import { pg } from "../db/knex";
 import {
+    convertNewPersonApiToDb,
     convertPersonApiToDb,
-    convertPersonDbToApi,
+    convertPersonDbToApi, IDbNewPerson,
     IDbPerson,
     INewPerson,
     IPerson, IPersonContact,
@@ -21,20 +22,28 @@ export default class PersonController extends Controller {
         @Body() personData: INewPerson,
         res: Response
     ): Promise<void> {
-        return await addNewEntry<IPerson, INewPerson, IDbPerson>(
+        return await addNewEntry<INewPerson, INewPerson, IDbNewPerson>(
             this.TABLE,
             personData,
             validateNewPerson,
-            convertPersonApiToDb,
+            convertNewPersonApiToDb,
             res
         );
     }
 
     @Get()
-    public async getPerson(
+    public async getPersonContact(
         @Path() id: string
     ): Promise<IPersonContact> {
-        const person: IDbPerson[] = await pg(this.TABLE).select("*").where(id);
+        const person: IDbPerson[] = await pg(this.TABLE).select("*").where({id});
+        return convertPersonDbToApi(person.pop());
+    }
+
+    @Get()
+    public async getPerson(
+        @Path() id: string
+    ): Promise<IPerson> {
+        const person: IDbPerson[] = await pg(this.TABLE).select("*").where({id});
         return convertPersonDbToApi(person.pop());
     }
 

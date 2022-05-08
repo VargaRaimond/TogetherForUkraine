@@ -19,6 +19,13 @@ router.get(
 );
 
 router.get(
+    "/:personId",
+    routesHelper((req, _) =>
+        controller.getPersonOffers(req.params.personId)
+    )
+);
+
+router.get(
     "/",
     routesHelper((req, _) =>
         controller.getOffers()
@@ -27,7 +34,12 @@ router.get(
 
 router.put(
     "/:offerId/accept",
-    routesHelper((req, res) => controller.acceptOffer(req.params.offerId, req.body, res))
+    routesHelper((req, res) => controller.acceptOffer(req.params.offerId))
+);
+
+router.put(
+    "/:offerId",
+    routesHelper((req, res) => controller.updateOffer(req.params.offerId, req.body, res))
 );
 
 router.delete(

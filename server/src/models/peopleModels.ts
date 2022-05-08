@@ -1,19 +1,22 @@
 import * as yup from "yup";
 
-export interface IDbPerson {
+export interface IDbPerson extends IDbNewPerson {
+    created_at: Date,
+    updated_at: Date
+}
+
+export interface IDbNewPerson {
     id: string,
     name: string,
     email_contact: string,
-    phone_number: string,
-    created_at: Date,
-    updated_at: Date,
+    phone_number: string
 }
 
 export interface INewPerson {
     id: string,
     name: string,
-    email_contact: string,
-    phone_number: string,
+    emailContact: string,
+    phoneNumber: string,
 }
 
 export interface IPerson {
@@ -34,15 +37,15 @@ export interface IPersonContact {
 export const validateNewPerson = yup.object({
     id: yup.string().required(),
     name: yup.string().required(),
-    email_contact: yup.string().required(),
-    phone_number: yup.string().required(),
+    emailContact: yup.string().required(),
+    phoneNumber: yup.string().required(),
 });
 
 export const validatePerson = yup.object({
     id: yup.string().required(),
     name: yup.string(),
-    email_contact: yup.string(),
-    phone_number: yup.string(),
+    emailContact: yup.string(),
+    phoneNumber: yup.string(),
 });
 
 export const convertPersonApiToDb: (person: IPerson) => IDbPerson = (person) => ({
@@ -52,6 +55,13 @@ export const convertPersonApiToDb: (person: IPerson) => IDbPerson = (person) => 
     phone_number: person.phoneNumber,
     created_at: person.createdAt,
     updated_at: person.updatedAt,
+});
+
+export const convertNewPersonApiToDb: (person: INewPerson) => IDbNewPerson = (person) => ({
+    id: person.id,
+    name: person.name,
+    email_contact: person.emailContact,
+    phone_number: person.phoneNumber
 });
 
 export const convertPersonDbToApi: (person: IDbPerson) => IPerson = (person) => ({
