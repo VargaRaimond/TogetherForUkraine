@@ -42,7 +42,7 @@ const AccountSettingsLoggedIn = () => {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu}>
-          <AccountCircle fontSize={"large"} />
+          <AccountCircle fontSize="large" />
         </IconButton>
       </Tooltip>
       <Menu

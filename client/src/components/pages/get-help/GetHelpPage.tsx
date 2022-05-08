@@ -36,10 +36,11 @@ const GetHelpPage = () => {
 
   const initialOffers = useMemo(
     () =>
+      // TODO db: fetch offers
       staticRows.map((offer) => ({
         ...offer,
         seeMore: (
-          <Button onClick={() => setModalOffer(offer)} variant={"contained"}>
+          <Button onClick={() => setModalOffer(offer)} variant="contained">
             See more
           </Button>
         ),

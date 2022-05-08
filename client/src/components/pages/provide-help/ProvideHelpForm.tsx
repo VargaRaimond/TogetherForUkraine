@@ -12,6 +12,7 @@ import {
   Radio,
   Button,
 } from "@mui/material";
+import { FormEvent } from "react";
 
 interface IProvideHelpData {
   title: string;
@@ -58,6 +59,11 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
           pl: { xs: 0, md: "20%" },
         }}
         disabled={!isAuthenticated}
+        onSubmit={(e: FormEvent) => {
+          // TODO: handle submit -> this is called only when there are no validation errors left
+          e.preventDefault();
+          return false;
+        }}
       >
         <Box
           sx={{
@@ -128,7 +134,7 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
               sx={{ maxWidth: "220px" }}
               disabled={!isAuthenticated}
             />
-            <FormControl margin="normal" disabled={!isAuthenticated}>
+            <FormControl margin="normal" required disabled={!isAuthenticated}>
               <FormLabel id="provide-help-preferred-contact-method">
                 Preferred contact method
               </FormLabel>
