@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Edit, Check } from "@mui/icons-material";
-import { IMyOffers } from "./MyOffersPage";
+import { IMyOffer } from "./MyOffersPage";
 
 const boxStyle = {
   display: "flex",
@@ -26,11 +26,11 @@ const boxStyle = {
   p: 4,
 };
 
-const HelpOffersModal = ({
+const MyOffersModal = ({
   offer,
   handleClose: extHandleClose,
 }: {
-  offer?: IMyOffers;
+  offer?: IMyOffer;
   handleClose: () => void;
 }) => {
   const open = useMemo(() => !!offer, [offer]);
@@ -131,4 +131,4 @@ const HelpOffersModal = ({
   );
 };
 
-export default HelpOffersModal;
+export default MyOffersModal;
