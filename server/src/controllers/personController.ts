@@ -32,9 +32,9 @@ export default class PersonController extends Controller {
 
     @Get()
     public async getPerson(
-        @Path() authId: string
+        @Path() id: string
     ): Promise<IPersonContact> {
-        const person: IDbPerson[] = await pg(this.TABLE).select("*").where(authId);
+        const person: IDbPerson[] = await pg(this.TABLE).select("*").where(id);
         return convertPersonDbToApi(person.pop());
     }
 

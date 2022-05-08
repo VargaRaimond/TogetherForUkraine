@@ -2,7 +2,6 @@ import * as yup from "yup";
 
 export interface IDbPerson {
     id: string,
-    auth_id: string,
     name: string,
     email_contact: string,
     phone_number: string,
@@ -11,7 +10,7 @@ export interface IDbPerson {
 }
 
 export interface INewPerson {
-    auth_id: string,
+    id: string,
     name: string,
     email_contact: string,
     phone_number: string,
@@ -19,7 +18,6 @@ export interface INewPerson {
 
 export interface IPerson {
     id: string,
-    authId: string,
     name: string,
     emailContact: string,
     phoneNumber: string,
@@ -34,7 +32,7 @@ export interface IPersonContact {
 }
 
 export const validateNewPerson = yup.object({
-    auth_id: yup.string().required(),
+    id: yup.string().required(),
     name: yup.string().required(),
     email_contact: yup.string().required(),
     phone_number: yup.string().required(),
@@ -42,7 +40,6 @@ export const validateNewPerson = yup.object({
 
 export const validatePerson = yup.object({
     id: yup.string().required(),
-    auth_id: yup.string().required(),
     name: yup.string().required(),
     email_contact: yup.string().required(),
     phone_number: yup.string().required(),
@@ -50,7 +47,6 @@ export const validatePerson = yup.object({
 
 export const convertPersonApiToDb: (person: IPerson) => IDbPerson = (person) => ({
     id: person.id,
-    auth_id: person.authId,
     name: person.name,
     email_contact: person.emailContact,
     phone_number: person.phoneNumber,
@@ -60,7 +56,6 @@ export const convertPersonApiToDb: (person: IPerson) => IDbPerson = (person) => 
 
 export const convertPersonDbToApi: (person: IDbPerson) => IPerson = (person) => ({
     id: person.id,
-    authId: person.auth_id,
     name: person.name,
     emailContact: person.email_contact,
     phoneNumber: person.phone_number,

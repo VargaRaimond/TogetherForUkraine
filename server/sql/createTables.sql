@@ -1,8 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS people (
-    id uuid DEFAULT uuid_generate_v4(),
-    auth_id varchar(200),
+    id varchar(200),
     name varchar(50) NOT NULL,
     email_contact varchar(50),
     phone_number varchar(20),
@@ -13,7 +12,7 @@ CREATE TABLE IF NOT EXISTS people (
 
 CREATE TABLE IF NOT EXISTS OFFERS (
     id uuid DEFAULT uuid_generate_v4(),
-    person_id uuid,
+    person_id varchar(200),
     title varchar(50),
     description varchar(200),
     location varchar(50),
@@ -32,7 +31,7 @@ CREATE TABLE IF NOT EXISTS OFFERS (
 CREATE TABLE IF NOT EXISTS USAGES (
     id uuid DEFAULT uuid_generate_v4(),
     offer_id uuid,
-    person_id uuid,
+    person_id varchar(200),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (id),
