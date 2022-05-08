@@ -5,3 +5,10 @@ export async function deleteUsagesForOffer(offerId: string) {
         .where({ offer_id: offerId })
         .delete();
 }
+
+export async function isFirstUsageForPerson(personId: string) {
+    const usagesForPerson = await pg("usages")
+        .where({ person_id: personId })
+        .select("*");
+    return usagesForPerson.length === 0;
+}

@@ -1,17 +1,21 @@
-import { Controller, Route, Tags, Post, Body, Get, Put, Delete, Path } from "tsoa";
-import { addNewEntry, deleteEntry, updateEntry } from "../db/services";
-import { Response } from "express";
-import { pg } from "../db/knex";
+import {Body, Controller, Delete, Get, Path, Post, Put, Route, Tags} from "tsoa";
+import {addNewEntry, deleteEntry, updateEntry} from "../db/services";
+import {Response} from "express";
+import {pg} from "../db/knex";
 import {
     convertNewOfferApiToDb,
     convertOfferApiToDb,
-    convertOfferDbToApi, IDbNewOffer,
+    convertOfferDbToApi,
+    IDbNewOffer,
     IDbOffer,
     INewOffer,
     IOffer,
-    validateNewOffer, validateOffer
+    validateNewOffer,
+    validateOffer
 } from "../models/offersModels";
 import {deleteUsagesForOffer} from "../services/usagesServices";
+import {incrementStat, StatsType} from "../services/statsServices";
+import {isFirstOfferForPerson} from "../services/offersServices";
 
 @Route("offers")
 @Tags("Offers")
@@ -23,6 +27,11 @@ export default class OffersController extends Controller {
         @Body() offerData: INewOffer,
         res: Response
     ): Promise<void> {
+        await incrementStat(StatsType.TOTAL_OFFERS);
+        if (await isFirstOfferForPerson(offerData.personId)) {
+            await incrementStat(StatsType.ACTIVE_VOLUNTEERS)
+        }
+
         return await addNewEntry<INewOffer, INewOffer, IDbNewOffer>(
             this.TABLE,
             offerData,
@@ -58,6 +67,7 @@ export default class OffersController extends Controller {
     public async acceptOffer(
         @Path() offerId: string
     ): Promise<void> {
+        await incrementStat(StatsType.ACTIVE_OFFERS);
         await pg(this.TABLE).update({is_approved: true}, null, { includeTriggerModifications: true }).where({id: offerId});
     }
 

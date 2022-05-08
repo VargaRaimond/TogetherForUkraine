@@ -38,3 +38,12 @@ CREATE TABLE IF NOT EXISTS USAGES (
     CONSTRAINT fk_person_id_usage FOREIGN KEY(person_id) REFERENCES people(id),
     CONSTRAINT fk_offer_id_usage FOREIGN KEY(offer_id) REFERENCES offers(id)
 );
+
+CREATE TABLE IF NOT EXISTS STATS (
+    id INT DEFAULT 0,
+    active_volunteers INT DEFAULT 0,
+    helped_people INT DEFAULT 0,
+    active_offers INT DEFAULT 0,
+    total_offers INT DEFAULT 0,
+    PRIMARY KEY (id)
+);
