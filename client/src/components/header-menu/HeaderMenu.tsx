@@ -7,7 +7,7 @@ import MenuTabs from "./MenuTabs";
 
 const HeaderMenu = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <MenuTabs />
