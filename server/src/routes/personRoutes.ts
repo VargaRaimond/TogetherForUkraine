@@ -10,16 +10,19 @@ router.post(
     "/",
     routesHelper((req, res) => controller.addPerson(req.body as INewPerson, res))
 );
+
 router.get(
     "/:id/contact",
     routesHelper((req, _) =>
         controller.getPerson(req.params.id)
     )
 );
+
 router.put(
     "/:id/",
     routesHelper((req, res) => controller.updatePerson(req.params.id, req.body, res))
 );
+
 router.delete(
     "/:id/",
     routesHelper((req, res) => controller.deletePerson(req.params.id, res))
