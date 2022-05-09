@@ -7,32 +7,30 @@ const router = express.Router();
 const controller = new PersonController();
 
 router.post(
-    "/",
-    routesHelper((req, res) => controller.addPerson(req.body as INewPerson, res))
+  "/",
+  routesHelper((req, res) => controller.addPerson(req.body as INewPerson, res))
 );
 
 router.get(
-    "/:id/contact",
-    routesHelper((req, _) =>
-        controller.getPersonContact(req.params.id)
-    )
+  "/:id/contact",
+  routesHelper((req, _) => controller.getPersonContact(req.params.id))
 );
 
 router.get(
-    "/:id",
-    routesHelper((req, _) =>
-        controller.getPerson(req.params.id)
-    )
+  "/:id",
+  routesHelper((req, _) => controller.getPerson(req.params.id))
 );
 
 router.put(
-    "/:id/",
-    routesHelper((req, res) => controller.updatePerson(req.params.id, req.body, res))
+  "/:id/",
+  routesHelper((req, res) =>
+    controller.updatePerson(req.params.id, req.body, res)
+  )
 );
 
 router.delete(
-    "/:id/",
-    routesHelper((req, res) => controller.deletePerson(req.params.id, res))
+  "/:id/",
+  routesHelper((req, res) => controller.deletePerson(req.params.id, res))
 );
 
 export default router;
