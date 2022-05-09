@@ -17,6 +17,8 @@ const issuer = process.env.AUTH0_ISSUER || "https://dev-gq9lbjoe.us.auth0.com/";
 
 const app = express();
 
+app.disable("etag");
+
 /** Logging */
 app.use(morgan("dev"));
 
