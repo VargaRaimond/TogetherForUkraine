@@ -1,24 +1,31 @@
 import { Controller, Route, Tags, Post, Body } from "tsoa";
 import { addNewEntry } from "../db/services";
 import { Response } from "express";
-import {convertUsageApiToDb, IDbUsage, INewUsage, IUsage, validateNewUsage} from "../models/usageModels";
+import {
+  convertNewUsageApiToDb,
+  IDbNewUsage,
+  INewUsage,
+  validateNewUsage,
+} from "../models/usageModels";
+import { incrementRefugeesCount } from "../services/offersServices";
 
 @Route("usages")
 @Tags("Usages")
 export default class UsagesController extends Controller {
-    TABLE: string = "usages";
+  TABLE: string = "usages";
 
-    @Post()
-    public async addUsage(
-        @Body() usageData: INewUsage,
-        res: Response
-    ): Promise<void> {
-        return await addNewEntry<IUsage, INewUsage, IDbUsage>(
-            this.TABLE,
-            usageData,
-            validateNewUsage,
-            convertUsageApiToDb,
-            res
-        );
-    }
+  @Post()
+  public async addUsage(
+    @Body() usageData: INewUsage,
+    res: Response
+  ): Promise<void> {
+    await incrementRefugeesCount(usageData.offerId);
+    return await addNewEntry<INewUsage, INewUsage, IDbNewUsage>(
+      this.TABLE,
+      usageData,
+      validateNewUsage,
+      convertNewUsageApiToDb,
+      res
+    );
+  }
 }

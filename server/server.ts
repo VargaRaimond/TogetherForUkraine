@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import morgan from "morgan";
 
 // https://auth0.com/blog/node-js-and-typescript-tutorial-secure-an-express-api/
 
@@ -14,6 +15,9 @@ const audience = process.env.AUTH0_AUDIENCE || "http://together-for-ukraine";
 const issuer = process.env.AUTH0_ISSUER || "https://dev-gq9lbjoe.us.auth0.com/";
 
 const app = express();
+
+/** Logging */
+app.use(morgan("dev"));
 
 app.use(express.json());
 // Serve the React static files after build
