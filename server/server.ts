@@ -9,6 +9,7 @@ import jwksRsa from "jwks-rsa";
 import offersRoutes from "./src/routes/offersRoutes";
 import personRoutes from "./src/routes/personRoutes";
 import usagesRoutes from "./src/routes/usagesRoutes";
+import statsRoutes from "./src/routes/statsRoutes";
 
 const PORT = process.env.PORT || 5001;
 const audience = process.env.AUTH0_AUDIENCE || "http://together-for-ukraine";
@@ -44,6 +45,7 @@ app.listen(PORT, () => {
 app.use("/api/person/", personRoutes);
 app.use("/api/offers/", offersRoutes);
 app.use("/api/usages/", usagesRoutes);
+app.use("/api/stats/", statsRoutes);
 
 app.get("/api/hello", (req, res) => {
   res.send({ message: "Hello" });
