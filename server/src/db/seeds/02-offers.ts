@@ -9,8 +9,7 @@ exports.seed = (knex) => {
           id: "8993e8b5-00f5-450b-b2d0-59e523f1280b",
           person_id: "auth0|62751fc94028e4006ffb1ee3",
           title: "Help 1",
-          description:
-            "Volunteers are individuals who freely offer their time, labor, and expertise. Volunteers often work for schools or NGOs, where they typically receive training and report to designated senior staff. Completely free trial, no card required.",
+          description: "I offer 3 cooked meals a day",
           location: "Bacau",
           category: "Food",
           max_refugees_count: 10,
@@ -22,8 +21,7 @@ exports.seed = (knex) => {
           id: "b5b85423-1687-4d99-ad09-236fd34bff46",
           person_id: "auth0|62751fc94028e4006ffb1ee3",
           title: "Help 2",
-          description:
-            "Volunteers are individuals who freely offer their time, labor, and expertise. Volunteers often work for schools or NGOs, where they typically receive training and report to designated senior staff. Completely free trial, no card required.",
+          description: "I offer 3 cooked meals a day",
           location: "Bucuresti",
           category: "Food",
           max_refugees_count: 6,
