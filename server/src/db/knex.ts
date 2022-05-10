@@ -1,6 +1,6 @@
-import { knex } from "knex";
+import { knex, Knex } from "knex";
 
-export const pg = knex({
+const config: Knex.Config = {
   client: "postgres",
   connection: {
     host: "localhost",
@@ -13,4 +13,8 @@ export const pg = knex({
   seeds: {
     directory: "./seeds",
   },
-});
+};
+
+export const pg = knex(config);
+
+export default config;
