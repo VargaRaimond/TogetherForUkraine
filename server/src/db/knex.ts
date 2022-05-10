@@ -10,4 +10,7 @@ export const pg = knex({
     database: "postgres",
   },
   useNullAsDefault: true,
+  seeds: {
+    directory: "./seeds",
+  },
 });
