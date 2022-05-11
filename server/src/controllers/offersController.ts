@@ -28,6 +28,7 @@ import { deleteUsagesForOffer } from "../services/usagesServices";
 import { incrementStat, StatsType } from "../services/statsServices";
 import {
   getOfferWithVolunteer,
+  getOfferWithVolunteerName,
   isFirstOfferForPerson,
 } from "../services/offersServices";
 
@@ -61,12 +62,12 @@ export default class OffersController extends Controller {
       .select("*")
       .where({ is_approved: true });
     return Promise.all(
-      offers.map(convertOfferDbToApi).map(getOfferWithVolunteer)
+      offers.map(convertOfferDbToApi).map(getOfferWithVolunteerName)
     );
   }
 
   @Get()
-  public async getPendingOffers(): Promise<IOfferWithVolunteer[]> {
+  public async getPendingOffers() {
     const offers: IDbOffer[] = await pg(this.TABLE)
       .select("*")
       .where({ is_approved: false });
@@ -76,15 +77,11 @@ export default class OffersController extends Controller {
   }
 
   @Get()
-  public async getPersonOffers(
-    @Path() personId: string
-  ): Promise<IOfferWithVolunteer[]> {
+  public async getPersonOffers(@Path() personId: string): Promise<IOffer[]> {
     const offers: IDbOffer[] = await pg(this.TABLE)
       .select("*")
       .where({ person_id: personId });
-    return Promise.all(
-      offers.map(convertOfferDbToApi).map(getOfferWithVolunteer)
-    );
+    return offers.map(convertOfferDbToApi);
   }
 
   @Put()
