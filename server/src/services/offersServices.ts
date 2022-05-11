@@ -16,7 +16,7 @@ export async function isFirstOfferForPerson(personId: string) {
 export async function isOfferFilled(offerId: string) {
   const offer: [number, number] = (
     await pg("offers")
-      .where({ offer_id: offerId })
+      .where({ id: offerId })
       .select(["max_refugees_count", "current_refugees_count"])
   ).pop();
   return offer[0] === offer[1];
@@ -25,9 +25,10 @@ export async function isOfferFilled(offerId: string) {
 export async function getOfferWithVolunteerName(
   offer: IOffer
 ): Promise<IOfferWithVolunteer> {
-  const personName = await getPersonNameIfNotAnon(offer.personId);
   return {
-    volunteerName: personName,
+    volunteerName: offer.isAnonymous
+      ? "Anonymous"
+      : await getPersonNameIfNotAnon(offer.personId),
     ...offer,
   } as IOfferWithVolunteer;
 }
