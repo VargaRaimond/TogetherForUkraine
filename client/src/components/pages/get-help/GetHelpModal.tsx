@@ -11,7 +11,7 @@ import {
 import { Delete, Send } from "@mui/icons-material";
 import { getUserRolesObject } from "../../utils/authRoles";
 import IncompleteProfileNote from "./IncompleteProfileNote";
-import { IOfferWithVolunteer } from "../../../api-interface/Offers";
+import { IOfferWithVolunteerName } from "../../../api-interface/Offers";
 
 const boxStyle = {
   display: "flex",
@@ -35,11 +35,17 @@ const StyledButton = styled(Button)(() => ({
 }));
 
 const GetHelpModal = ({
-  handleClose,
   offer,
+  handleClose,
+  handleApplyNow,
+  handleDelete,
+  hasIncompleteProfile,
 }: {
-  handleClose: (open: boolean) => void;
-  offer?: IOfferWithVolunteer;
+  offer?: IOfferWithVolunteerName;
+  hasIncompleteProfile: boolean;
+  handleClose: () => void;
+  handleApplyNow: (offer?: IOfferWithVolunteerName) => void;
+  handleDelete: (offer?: IOfferWithVolunteerName) => void;
 }) => {
   const { user } = useAuth0();
   const open = useMemo(() => !!offer, [offer]);
@@ -47,9 +53,6 @@ const GetHelpModal = ({
   const { isAdmin, isRefugee } = useMemo(() => {
     return getUserRolesObject(user);
   }, [user]);
-
-  // TODO: actually check if the profile is complete or not
-  const hasIncompleteProfile = true;
 
   return (
     <Modal
@@ -84,13 +87,16 @@ const GetHelpModal = ({
           offers
         </Typography>
 
-        {/* TODO db onClick modal: Send */}
         {isRefugee && (
           <>
             <StyledButton
               endIcon={<Send />}
               variant="contained"
               disabled={hasIncompleteProfile}
+              onClick={() => {
+                handleApplyNow(offer);
+                handleClose();
+              }}
             >
               Apply now
             </StyledButton>
@@ -98,12 +104,15 @@ const GetHelpModal = ({
           </>
         )}
 
-        {/* TODO db onClick modal: Delete */}
         {isAdmin && (
           <StyledButton
             startIcon={<Delete />}
             variant="contained"
             color="error"
+            onClick={() => {
+              handleDelete(offer);
+              handleClose();
+            }}
           >
             Delete
           </StyledButton>
