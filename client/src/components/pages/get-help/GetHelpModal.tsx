@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Backdrop,
   Box,
@@ -8,10 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Delete, Send } from "@mui/icons-material";
-import { IOfferEntry } from "./GetHelpPage";
 import { getUserRolesObject } from "../../utils/authRoles";
-import { useAuth0 } from "@auth0/auth0-react";
 import IncompleteProfileNote from "./IncompleteProfileNote";
+import { IOfferWithVolunteer } from "../../../api-interface/Offers";
 
 const boxStyle = {
   display: "flex",
@@ -39,7 +39,7 @@ const GetHelpModal = ({
   offer,
 }: {
   handleClose: (open: boolean) => void;
-  offer?: IOfferEntry;
+  offer?: IOfferWithVolunteer;
 }) => {
   const { user } = useAuth0();
   const open = useMemo(() => !!offer, [offer]);
@@ -66,7 +66,7 @@ const GetHelpModal = ({
       <Box sx={boxStyle}>
         <div style={{ display: "flex", alignItems: "end" }}>
           <Typography variant="h4" sx={{ margin: "10px 5px 0px 25px" }}>
-            {offer?.name}
+            {offer?.title}
           </Typography>
 
           <Typography variant="h6" sx={{ margin: "0 15px 0" }}>
@@ -79,10 +79,12 @@ const GetHelpModal = ({
         </Typography>
 
         <Typography variant="body2" sx={{ margin: "10px" }}>
-          Remaining: {offer?.remainingOffers} offers
+          Remaining:{" "}
+          {offer ? offer.maxRefugeesCount - offer.currentRefugeesCount : 0}{" "}
+          offers
         </Typography>
 
-        {/* TODO onClick modal: Send */}
+        {/* TODO db onClick modal: Send */}
         {isRefugee && (
           <>
             <StyledButton
@@ -96,7 +98,7 @@ const GetHelpModal = ({
           </>
         )}
 
-        {/* TODO onClick modal: Delete */}
+        {/* TODO db onClick modal: Delete */}
         {isAdmin && (
           <StyledButton
             startIcon={<Delete />}

@@ -1,11 +1,18 @@
-import React, { useMemo, useState } from "react";
-import GenericTable from "../../utils/table/GenericTable";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
+import { IOfferWithVolunteer } from "../../../api-interface/Offers";
+import GenericTable from "../../utils/table/GenericTable";
 import GetHelpTableToolbar from "./GetHelpTableToolbar";
 import GetHelpModal from "./GetHelpModal";
 import { PageWrapper } from "../../utils/CommonComponents";
-import { mockOffers } from "../../0-mock-data/mock-offers";
+import LoadingScreen from "../../utils/LoadingScreen";
+import ErrorScreen from "../../utils/ErrorScreen";
 
+// TODO: remove
+// import { mockOffers } from "../../0-mock-data/mock-offers";
+// const staticRows: IOfferEntry[] = mockOffers;
+
+// TODO: this will be removed
 export interface IOfferEntry {
   id: string;
   name: string;
@@ -16,40 +23,56 @@ export interface IOfferEntry {
   remainingOffers: number;
 }
 
-const staticRows: IOfferEntry[] = mockOffers;
-
-const headCells = [
-  { id: "name", label: "Name" },
-  { id: "category", label: "Category" },
-  { id: "location", label: "Location" },
-  { id: "volunteer", label: "Volunteer" },
-  { id: "seeMore" },
-];
-
-export interface IOfferTableEntry extends IOfferEntry {
+export interface IOfferTableEntry extends IOfferWithVolunteer {
   seeMore: JSX.Element;
 }
 
+const headCells = [
+  { id: "title", label: "Title" },
+  { id: "category", label: "Category" },
+  { id: "location", label: "Location" },
+  { id: "volunteerName", label: "Volunteer" },
+  { id: "seeMore" },
+];
+
 const GetHelpPage = () => {
-  const [modalOffer, setModalOffer] = useState<IOfferEntry | undefined>(
+  const [offers, setOffers] = useState<IOfferTableEntry[]>([]);
+  const [error, setError] = useState(undefined);
+  const [initialOffers, setInitialOffers] = useState<
+    IOfferTableEntry[] | undefined
+  >(undefined);
+  const [modalOffer, setModalOffer] = useState<IOfferWithVolunteer | undefined>(
     undefined
   );
 
-  const initialOffers = useMemo(
-    () =>
-      // TODO db: fetch offers
-      staticRows.map((offer) => ({
-        ...offer,
-        seeMore: (
-          <Button onClick={() => setModalOffer(offer)} variant="contained">
-            See more
-          </Button>
-        ),
-      })),
-    []
-  );
+  useEffect(() => {
+    fetch("/api/offers")
+      .then((response) => response.json())
+      .then((responseOffers: IOfferWithVolunteer[]) => {
+        const completeOfferRows = responseOffers.map((offer) => ({
+          ...offer,
+          // TODO: should not receive volunteerName if it's anonymous
+          volunteerName: offer.isAnonymous ? "anonymous" : offer.volunteerName,
+          seeMore: (
+            <Button onClick={() => setModalOffer(offer)} variant="contained">
+              See more
+            </Button>
+          ),
+        }));
 
-  const [offers, setOffers] = useState(initialOffers);
+        setOffers(completeOfferRows);
+        setInitialOffers(completeOfferRows);
+      })
+      .catch((e) => setError(e));
+  }, []);
+
+  if (initialOffers === undefined) {
+    return <LoadingScreen />;
+  }
+
+  if (error) {
+    return <ErrorScreen error={error} />;
+  }
 
   return (
     <PageWrapper>
@@ -62,4 +85,5 @@ const GetHelpPage = () => {
     </PageWrapper>
   );
 };
+
 export default GetHelpPage;

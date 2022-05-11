@@ -19,7 +19,7 @@ const GetHelpTableToolbar = ({
   offers,
   setOffers,
 }: IGetHelpTableToolbarProps) => {
-  const options = useMemo(() => offers.map(({ name }) => name), [offers]);
+  const options = useMemo(() => offers.map(({ title }) => title), [offers]);
 
   const [searchedWord, setSearchWord] = useState<string | undefined>(undefined);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -44,8 +44,8 @@ const GetHelpTableToolbar = ({
     const offersAfterSearch =
       searchedWord === undefined
         ? offers
-        : offers.filter(({ name }) =>
-            name.toLowerCase().includes(searchedWord)
+        : offers.filter(({ title }) =>
+            title.toLowerCase().includes(searchedWord)
           );
 
     setOffers(
