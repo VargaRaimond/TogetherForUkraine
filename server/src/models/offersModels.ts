@@ -53,7 +53,6 @@ export const validateNewOffer = yup.object({
   location: yup.string().required(),
   category: yup.string().required(),
   maxRefugeesCount: yup.number().required(),
-  currentRefugeesCount: yup.number().required(),
   isAnonymous: yup.boolean().required(),
   preferredContactMethod: yup.string().required(),
 });

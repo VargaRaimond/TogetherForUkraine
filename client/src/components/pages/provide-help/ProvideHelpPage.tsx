@@ -16,7 +16,7 @@ const ProvideHelpPage = () => {
     <div>
       {!isAuthenticated && <ProvideHelpNotAuthenticated />}
       <PageWrapper>
-        <ProvideHelpForm isAuthenticated={isAuthenticated} />
+        <ProvideHelpForm />
       </PageWrapper>
     </div>
   );
