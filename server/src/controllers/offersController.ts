@@ -20,12 +20,16 @@ import {
   IDbOffer,
   INewOffer,
   IOffer,
+  IOfferWithVolunteer,
   validateNewOffer,
   validateOffer,
 } from "../models/offersModels";
 import { deleteUsagesForOffer } from "../services/usagesServices";
 import { incrementStat, StatsType } from "../services/statsServices";
-import { isFirstOfferForPerson } from "../services/offersServices";
+import {
+  getOfferWithVolunteer,
+  isFirstOfferForPerson,
+} from "../services/offersServices";
 
 @Route("offers")
 @Tags("Offers")
@@ -52,27 +56,35 @@ export default class OffersController extends Controller {
   }
 
   @Get()
-  public async getOffers(): Promise<IOffer[]> {
+  public async getOffers(): Promise<IOfferWithVolunteer[]> {
     const offers: IDbOffer[] = await pg(this.TABLE)
       .select("*")
       .where({ is_approved: true });
-    return offers.map(convertOfferDbToApi);
+    return Promise.all(
+      offers.map(convertOfferDbToApi).map(getOfferWithVolunteer)
+    );
   }
 
   @Get()
-  public async getPendingOffers(): Promise<IOffer[]> {
+  public async getPendingOffers(): Promise<IOfferWithVolunteer[]> {
     const offers: IDbOffer[] = await pg(this.TABLE)
       .select("*")
       .where({ is_approved: false });
-    return offers.map(convertOfferDbToApi);
+    return Promise.all(
+      offers.map(convertOfferDbToApi).map(getOfferWithVolunteer)
+    );
   }
 
   @Get()
-  public async getPersonOffers(@Path() personId: string): Promise<IOffer[]> {
+  public async getPersonOffers(
+    @Path() personId: string
+  ): Promise<IOfferWithVolunteer[]> {
     const offers: IDbOffer[] = await pg(this.TABLE)
       .select("*")
       .where({ person_id: personId });
-    return offers.map(convertOfferDbToApi);
+    return Promise.all(
+      offers.map(convertOfferDbToApi).map(getOfferWithVolunteer)
+    );
   }
 
   @Put()
