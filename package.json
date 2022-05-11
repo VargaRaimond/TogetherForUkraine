@@ -12,7 +12,7 @@
     "client": "cd client && npm start && cd ..",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "seeds": "knex seed:run --knexfile server/src/db/knex.ts",
-    "db-start": "cd server && docker-compose up"
+    "db-start": "cd server && docker-compose up && cd .."
   },
   "keywords": [],
   "author": "",
