@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Cancel, Delete } from "@mui/icons-material";
-import { IMyOffer } from "./MyOffersPage";
+import { IOffer } from "../../../api-interface/Offers";
 
 const boxStyle = {
   display: "flex",
@@ -34,9 +34,9 @@ const MyOffersDeleteConfirmationModal = ({
   handleClose,
   handleDelete,
 }: {
-  offer?: IMyOffer;
+  offer?: IOffer;
   handleClose: () => void;
-  handleDelete: (offer: IMyOffer) => void;
+  handleDelete: (offer: IOffer) => void;
 }) => {
   const open = useMemo(() => !!offer, [offer]);
 
@@ -58,7 +58,7 @@ const MyOffersDeleteConfirmationModal = ({
           fontWeight="bold"
           sx={{ margin: "10px 5px 0px 25px" }}
         >
-          {offer?.name}
+          {offer?.title}
         </Typography>
         <Typography variant="h6" sx={{ margin: "10px" }}>
           Are you sure you want to delete this offer?

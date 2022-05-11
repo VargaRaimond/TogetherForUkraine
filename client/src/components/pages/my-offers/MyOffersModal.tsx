@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Backdrop,
   Box,
@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Edit, Check } from "@mui/icons-material";
-import { IMyOffer } from "./MyOffersPage";
+import { IOffer } from "../../../api-interface/Offers";
 
 const boxStyle = {
   display: "flex",
@@ -30,13 +30,14 @@ const MyOffersModal = ({
   offer,
   handleClose: extHandleClose,
 }: {
-  offer?: IMyOffer;
+  offer?: IOffer;
   handleClose: () => void;
 }) => {
   const open = useMemo(() => !!offer, [offer]);
 
   const [edit, setEdit] = useState(false);
   const [description, setDescription] = useState(offer?.description);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setDescription(offer?.description);
@@ -47,6 +48,27 @@ const MyOffersModal = ({
     setEdit(false);
     extHandleClose();
   };
+
+  const handleOfferUpdate = useCallback(() => {
+    if (!offer || description === "") return;
+    if (description === offer.description) {
+      setEdit(false);
+      return;
+    }
+    fetch(`/api/offers/${offer.id}`, {
+      method: "PUT",
+      body: JSON.stringify({ description }),
+    })
+      .then(() => {
+        setEdit(false);
+        if (offer && description) {
+          offer.description = description;
+        }
+      })
+      .catch((e) => {
+        setError(e);
+      });
+  }, [description, offer]);
 
   return (
     <Modal
@@ -63,7 +85,7 @@ const MyOffersModal = ({
       <Box sx={boxStyle}>
         <div style={{ display: "flex", alignItems: "end" }}>
           <Typography variant="h4" sx={{ margin: "10px 5px 0px 25px" }}>
-            {offer?.name}
+            {offer?.title}
           </Typography>
 
           <Typography variant="h6" sx={{ margin: "0 15px 0" }}>
@@ -81,8 +103,8 @@ const MyOffersModal = ({
                 onChange={(event) => {
                   setDescription(event.target.value);
                 }}
-                error={description === ""}
-                helperText={description === "" ? "Description required" : ""}
+                error={description === "" || error !== ""}
+                helperText={description === "" ? "Description required" : error}
               />
               <Tooltip title="Edit description">
                 <IconButton
@@ -90,8 +112,7 @@ const MyOffersModal = ({
                   size="small"
                   sx={{ alignSelf: "center" }}
                   onClick={() => {
-                    // todo db: UPDATE offer
-                    if (description !== "") setEdit(false);
+                    handleOfferUpdate();
                   }}
                 >
                   <Check />
@@ -103,7 +124,7 @@ const MyOffersModal = ({
               <Typography variant="body1" sx={{ margin: "10px" }}>
                 {description}
               </Typography>
-              {!offer?.isAccepted && (
+              {!offer?.isApproved && (
                 <Tooltip title="Edit description">
                   <IconButton
                     color="primary"
@@ -122,9 +143,10 @@ const MyOffersModal = ({
         </div>
 
         <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>
-          <b>Total offers:</b> {offer?.totalOffers}
+          <b>Total offers:</b> {offer?.maxRefugeesCount}
           <br />
-          <b>Remaining offers:</b> {offer?.remainingOffers}
+          <b>Remaining offers: </b>
+          {offer ? offer.maxRefugeesCount - offer.currentRefugeesCount : 0}
         </Typography>
       </Box>
     </Modal>
