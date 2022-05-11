@@ -5,7 +5,7 @@
     "module": "commonjs",
     "outDir": "./dist",
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "baseUrl": "..",
     "paths": {
       "*": ["node_modules/*"]
     }

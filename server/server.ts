@@ -11,7 +11,7 @@ import personRoutes from "./src/routes/personRoutes";
 import usagesRoutes from "./src/routes/usagesRoutes";
 import statsRoutes from "./src/routes/statsRoutes";
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.API_PORT || 5001;
 const audience = process.env.AUTH0_AUDIENCE || "http://together-for-ukraine";
 const issuer = process.env.AUTH0_ISSUER || "https://dev-gq9lbjoe.us.auth0.com/";
 
