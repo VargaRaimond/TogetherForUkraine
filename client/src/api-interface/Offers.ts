@@ -14,6 +14,11 @@ export interface IOffer {
   updatedAt: Date;
 }
 
-export interface IOfferWithVolunteer extends IOffer {
+export interface IOfferWithVolunteerName extends IOffer {
   volunteerName: string;
+}
+
+export interface IOfferWithVolunteer extends IOfferWithVolunteerName {
+  volunteerPhoneNumber: string;
+  volunteerContactEmail: string;
 }
