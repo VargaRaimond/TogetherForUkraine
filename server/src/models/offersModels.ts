@@ -47,6 +47,10 @@ export interface IOffer {
   updatedAt: Date;
 }
 
+export interface IOfferWithVolunteer extends IOffer {
+  volunteerName: string;
+}
+
 export const validateNewOffer = yup.object({
   personId: yup.string().required(),
   title: yup.string().required(),
