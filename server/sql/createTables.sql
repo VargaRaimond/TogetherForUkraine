@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS OFFERS (
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     PRIMARY KEY (id),
-    CONSTRAINT fk_person_id FOREIGN KEY(person_id) REFERENCES people(id)
+    CONSTRAINT fk_person_id FOREIGN KEY(person_id) REFERENCES people(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS USAGES (
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS USAGES (
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     PRIMARY KEY (id),
-    CONSTRAINT fk_person_id_usage FOREIGN KEY(person_id) REFERENCES people(id),
-    CONSTRAINT fk_offer_id_usage FOREIGN KEY(offer_id) REFERENCES offers(id)
+    CONSTRAINT fk_person_id_usage FOREIGN KEY(person_id) REFERENCES people(id) ON DELETE CASCADE,
+    CONSTRAINT fk_offer_id_usage FOREIGN KEY(offer_id) REFERENCES offers(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS STATS (
