@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS OFFERS (
     id uuid DEFAULT uuid_generate_v4(),
     person_id varchar(200),
     title varchar(50),
-    description varchar(200),
+    description varchar(500),
     location varchar(50),
     category varchar(50),
     max_refugees_count INT NOT NULL,
