@@ -10,7 +10,9 @@
     "build-prod": "cd client && npm install && npm run build && cd .. && npm install && npm run build",
     "server": "nodemon --verbose --watch \"server\" --ext \"ts,json\" --exec ts-node server/server.ts",
     "client": "cd client && npm start && cd ..",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "seeds": "knex seed:run --knexfile server/src/db/knex.ts",
+    "db-start": "cd server && docker-compose up && cd .."
   },
   "keywords": [],
   "author": "",
