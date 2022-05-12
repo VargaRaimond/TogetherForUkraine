@@ -23,10 +23,9 @@ const MyOfferActions = ({
   setModalOffer,
   setOfferToBeDeleted,
 }: {
-  // TODO: -> any
-  offer: any;
-  setModalOffer: any;
-  setOfferToBeDeleted: any;
+  offer: IOffer;
+  setModalOffer: (offer: IOffer) => void;
+  setOfferToBeDeleted: (offer: IOffer) => void;
 }) => {
   return (
     <>

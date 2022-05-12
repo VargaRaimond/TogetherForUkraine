@@ -57,6 +57,7 @@ const MyOffersModal = ({
     }
     fetch(`/api/offers/${offer.id}`, {
       method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ description }),
     })
       .then(() => {
