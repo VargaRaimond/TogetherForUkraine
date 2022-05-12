@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
@@ -49,7 +49,7 @@ const ProvideHelpForm = () => {
       .then((contact) => setContactData(contact));
   }, [user?.sub]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       [event.target.name]: event.target.value,
@@ -171,17 +171,17 @@ const ProvideHelpForm = () => {
               >
                 <FormControlLabel
                   value="phone-call"
-                  control={<Radio sx={{ width: "fit-content" }} />}
+                  control={<Radio required sx={{ width: "fit-content" }} />}
                   label="Phone call"
                 />
                 <FormControlLabel
                   value="text-message"
-                  control={<Radio sx={{ width: "fit-content" }} />}
+                  control={<Radio required sx={{ width: "fit-content" }} />}
                   label="Text message"
                 />
                 <FormControlLabel
                   value="email"
-                  control={<Radio sx={{ width: "fit-content" }} />}
+                  control={<Radio required sx={{ width: "fit-content" }} />}
                   label="Email"
                 />
               </RadioGroup>
@@ -220,8 +220,13 @@ const ProvideHelpForm = () => {
               control={
                 <Checkbox
                   name="isAnonymous"
-                  value={state.isAnonymous}
-                  onChange={handleChange}
+                  checked={state.isAnonymous}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setState({
+                      ...state,
+                      [event.target.name]: event.target.checked,
+                    });
+                  }}
                 />
               }
               label="Do you want to remain anonymous?"

@@ -86,7 +86,7 @@ const HelpOffersModal = ({
 
         <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>
           <b>Volunteer:</b> {offer?.volunteerName}
-          <i>{!offer?.isAnonymous && "  (Wants to remain anonymous)"}</i>
+          <i>{offer?.isAnonymous && "  (Wants to remain anonymous)"}</i>
         </Typography>
 
         <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>

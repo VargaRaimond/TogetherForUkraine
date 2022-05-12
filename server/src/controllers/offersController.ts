@@ -25,7 +25,11 @@ import {
   validateOffer,
 } from "../models/offersModels";
 import { deleteUsagesForOffer } from "../services/usagesServices";
-import { incrementStat, StatsType } from "../services/statsServices";
+import {
+  decrementStat,
+  incrementStat,
+  StatsType,
+} from "../services/statsServices";
 import {
   getOfferWithVolunteer,
   getOfferWithVolunteerName,
@@ -117,5 +121,6 @@ export default class OffersController extends Controller {
   ): Promise<void> {
     await deleteUsagesForOffer(offerId);
     await deleteEntry(this.TABLE, offerId, res);
+    await decrementStat(StatsType.ACTIVE_OFFERS);
   }
 }
