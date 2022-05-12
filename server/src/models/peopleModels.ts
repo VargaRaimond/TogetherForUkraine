@@ -1,15 +1,15 @@
 import * as yup from "yup";
 
-export interface IDbPerson extends IDbNewPerson {
-  created_at: Date;
-  updated_at: Date;
-}
-
 export interface IDbNewPerson {
   id: string;
   name: string;
   email_contact: string;
   phone_number: string;
+}
+
+export interface IDbPerson extends IDbNewPerson {
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface INewPerson {
