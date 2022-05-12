@@ -4,53 +4,60 @@ import { Check, Edit } from "@mui/icons-material";
 
 const EditableField = ({
   label,
-  initialValue,
+  name,
+  value,
   disableEdit = false,
   inputType = "text",
+  handleValueChange,
+  handleValueSubmit,
 }: {
   label: string;
-  initialValue: string;
+  name: string;
+  value: string;
   disableEdit?: boolean;
   inputType?: string;
+  handleValueChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleValueSubmit?: (name: string) => void;
 }) => {
   const [edit, setEdit] = useState(false);
-  const [fieldValue, setFieldValue] = useState(initialValue);
 
   const handleEditClick = () => setEdit(true);
 
-  const handleValueSubmit = () => {
-    if (fieldValue !== "") setEdit(false);
-    // todo db: UPDATE field if (fieldValue !== initialValue)
+  const handleSubmit = () => {
+    if (value !== "") setEdit(false);
+    if (handleValueSubmit) handleValueSubmit(name);
   };
 
-  const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFieldValue(event.target.value);
-  };
-
-  const helperText = fieldValue === "" ? `${label} required` : "";
+  const helperText = value === "" ? `${label} required` : "";
 
   return (
     <div style={{ display: "flex", margin: "10px" }}>
       <TextField
         label={label}
-        value={fieldValue}
+        name={name}
+        value={value}
         onChange={handleValueChange}
-        error={fieldValue === ""}
+        error={value === ""}
         helperText={helperText}
         sx={{ width: "100%" }}
         disabled={!edit}
         type={inputType}
       />
-      <Tooltip title={edit ? `Submit ${label}` : `Edit ${label}`}>
-        <IconButton
-          disabled={disableEdit}
-          size="small"
-          color={edit ? "success" : "primary"}
-          onClick={edit ? handleValueSubmit : handleEditClick}
-        >
-          {edit ? <Check /> : <Edit />}
+      {disableEdit ? (
+        <IconButton disabled size="small">
+          <Edit />
         </IconButton>
-      </Tooltip>
+      ) : (
+        <Tooltip title={edit ? `Submit ${label}` : `Edit ${label}`}>
+          <IconButton
+            size="small"
+            color={edit ? "success" : "primary"}
+            onClick={edit ? handleSubmit : handleEditClick}
+          >
+            {edit ? <Check /> : <Edit />}
+          </IconButton>
+        </Tooltip>
+      )}
     </div>
   );
 };
