@@ -65,7 +65,7 @@ export default class PersonController extends Controller {
     await updateEntry<IPerson, IDbPerson>(
       this.TABLE,
       id,
-      personData,
+      { ...personData, id },
       validatePerson,
       convertPersonApiToDb,
       res
