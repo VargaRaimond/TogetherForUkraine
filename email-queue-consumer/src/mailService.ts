@@ -14,8 +14,10 @@ export const sendEmail = (emailContact, messageType, messageBody) => {
 
   transporter.sendMail(message, (err, info) => {
     if (err) {
+      // tslint:disable-next-line:no-console
       console.log(err);
     } else {
+      // tslint:disable-next-line:no-console
       console.log(info);
     }
   });
