@@ -98,8 +98,8 @@ const GetHelpPage = () => {
           setInitialOffers(initialOffers?.filter((o) => o.id !== offer.id));
           setOffers(offers.filter((o) => o.id !== offer.id));
         }
-        sendApplyNowEmail(offer);
       }
+      sendApplyNowEmail(offer);
     });
   };
 
