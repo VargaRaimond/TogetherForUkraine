@@ -1,4 +1,10 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
@@ -25,9 +31,26 @@ interface IProvideHelpData {
   isAnonymous: boolean;
 }
 
-const ProvideHelpForm = () => {
-  const { user, isAuthenticated } = useAuth0();
+const emptyProvideHelpData = {
+  title: "",
+  description: "",
+  category: "",
+  location: "",
+  maxRefugeesCount: "",
+  preferredContactMethod: "",
+  isAnonymous: false,
+};
+
+const ProvideHelpForm = ({
+  disabled,
+  setIsSubmitted,
+}: {
+  disabled: boolean;
+  setIsSubmitted: (isSubmitted: boolean) => void;
+}) => {
+  const { user } = useAuth0();
   const [error, setError] = useState("");
+
   const [state, setState] = useState<IProvideHelpData>({
     title: "",
     description: "",
@@ -37,6 +60,7 @@ const ProvideHelpForm = () => {
     preferredContactMethod: "",
     isAnonymous: false,
   });
+
   const [contactData, setContactData] = useState({
     phoneNumber: "",
     emailContact: "",
@@ -49,6 +73,10 @@ const ProvideHelpForm = () => {
       .then((contact) => setContactData(contact));
   }, [user?.sub]);
 
+  const clearForm = useCallback(() => {
+    setState(emptyProvideHelpData);
+  }, []);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
@@ -57,7 +85,7 @@ const ProvideHelpForm = () => {
   };
 
   const handleSubmit = (event: FormEvent) => {
-    if (!isAuthenticated) {
+    if (disabled) {
       return;
     }
     if (!user) {
@@ -72,13 +100,14 @@ const ProvideHelpForm = () => {
       .then()
       .catch((err) => setError(err));
 
-    // TODO submit: confirmation page
+    setIsSubmitted(true);
+    clearForm();
     event.preventDefault();
     return false;
   };
 
   return (
-    <div style={!isAuthenticated ? { filter: "blur(5px)" } : {}}>
+    <div style={disabled ? { filter: "blur(5px)" } : {}}>
       <FormControl
         component="form"
         sx={{
@@ -87,7 +116,7 @@ const ProvideHelpForm = () => {
           alignItems: { xs: "center", md: "start" },
           pl: { xs: 0, md: "20%" },
         }}
-        disabled={!isAuthenticated}
+        disabled={disabled}
         onSubmit={handleSubmit}
       >
         <Box
@@ -113,7 +142,7 @@ const ProvideHelpForm = () => {
               value={state.title}
               onChange={handleChange}
               margin="normal"
-              disabled={!isAuthenticated}
+              disabled={disabled}
             />
             <TextField
               required
@@ -125,7 +154,7 @@ const ProvideHelpForm = () => {
               value={state.description}
               onChange={handleChange}
               margin="normal"
-              disabled={!isAuthenticated}
+              disabled={disabled}
             />
             <TextField
               required
@@ -135,7 +164,7 @@ const ProvideHelpForm = () => {
               value={state.category}
               onChange={handleChange}
               margin="normal"
-              disabled={!isAuthenticated}
+              disabled={disabled}
             />
             <TextField
               required
@@ -145,7 +174,7 @@ const ProvideHelpForm = () => {
               value={state.location}
               onChange={handleChange}
               margin="normal"
-              disabled={!isAuthenticated}
+              disabled={disabled}
             />
             <TextField
               required
@@ -157,9 +186,9 @@ const ProvideHelpForm = () => {
               margin="normal"
               type="number"
               sx={{ maxWidth: "220px" }}
-              disabled={!isAuthenticated}
+              disabled={disabled}
             />
-            <FormControl margin="normal" required disabled={!isAuthenticated}>
+            <FormControl margin="normal" required disabled={disabled}>
               <FormLabel id="provide-help-preferred-contact-method">
                 Preferred contact method
               </FormLabel>
@@ -242,7 +271,7 @@ const ProvideHelpForm = () => {
             type="submit"
             variant="contained"
             sx={{ width: "100%", margin: "5px" }}
-            disabled={!isAuthenticated}
+            disabled={disabled}
           >
             Submit
           </Button>
