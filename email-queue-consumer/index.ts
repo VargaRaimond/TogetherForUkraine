@@ -1,5 +1,5 @@
 import amqplib from "amqplib";
-import { sendEmail } from "./src/mailin";
+import { sendEmail } from "./src/mailService";
 
 // TODO: maybe env?
 const QUEUE_NAME = "emailQ";
