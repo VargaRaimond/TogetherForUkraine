@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PageWrapper } from "../../utils/CommonComponents";
 import ProvideHelpForm from "./ProvideHelpForm";
@@ -9,14 +9,13 @@ import ProvideHelpAfterSubmission from "./ProvideHelpAfterSubmission";
 const ProvideHelpPage = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const topPageRef = useRef(null);
 
   if (isLoading) {
     return <LoadingScreen />;
   }
 
   return (
-    <div ref={topPageRef}>
+    <div>
       {!isAuthenticated && <ProvideHelpNotAuthenticated />}
       {isSubmitted && (
         <ProvideHelpAfterSubmission setIsSubmitted={setIsSubmitted} />
