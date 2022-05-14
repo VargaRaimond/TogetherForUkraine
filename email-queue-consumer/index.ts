@@ -1,4 +1,5 @@
 import amqplib from "amqplib";
+import { sendEmail } from "./src/mailin";
 
 // TODO: maybe env?
 const QUEUE_NAME = "emailQ";
@@ -10,6 +11,7 @@ connection.then(async (conn) => {
   channel.consume(QUEUE_NAME, (m) => {
     const message = JSON.parse(m.content);
     console.log(message);
+    sendEmail();
     channel.ack(m);
   });
 });
