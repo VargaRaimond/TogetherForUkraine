@@ -14,20 +14,22 @@ export async function isFirstOfferForPerson(personId: string) {
 }
 
 export async function isOfferFilled(offerId: string) {
-  const offer: [number, number] = (
+  const { max_refugees_count, current_refugees_count } = (
     await pg("offers")
-      .where({ offer_id: offerId })
+      .where({ id: offerId })
       .select(["max_refugees_count", "current_refugees_count"])
-  ).pop();
-  return offer[0] === offer[1];
+  ).pop() as { max_refugees_count: number; current_refugees_count: number };
+
+  return max_refugees_count === current_refugees_count;
 }
 
 export async function getOfferWithVolunteerName(
   offer: IOffer
 ): Promise<IOfferWithVolunteer> {
-  const personName = await getPersonNameIfNotAnon(offer.personId);
   return {
-    volunteerName: personName,
+    volunteerName: offer.isAnonymous
+      ? "Anonymous"
+      : await getPersonNameIfNotAnon(offer.personId),
     ...offer,
   } as IOfferWithVolunteer;
 }

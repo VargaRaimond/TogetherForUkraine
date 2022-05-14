@@ -1,4 +1,5 @@
-import * as React from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
   TextField,
@@ -11,41 +12,69 @@ import {
   RadioGroup,
   Radio,
   Button,
+  Typography,
 } from "@mui/material";
-import { FormEvent } from "react";
 
 interface IProvideHelpData {
   title: string;
   description: string;
   category: string;
   location: string;
-  maxPeopleCount: number | string;
+  maxRefugeesCount: number | string;
   preferredContactMethod: string;
-  // + display current data
   isAnonymous: boolean;
-  phoneNumber: string;
-  email: string;
 }
 
-const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
-  const [state, setState] = React.useState<IProvideHelpData>({
+const ProvideHelpForm = () => {
+  const { user, isAuthenticated } = useAuth0();
+  const [error, setError] = useState("");
+  const [state, setState] = useState<IProvideHelpData>({
     title: "",
     description: "",
     category: "",
     location: "",
-    maxPeopleCount: "",
+    maxRefugeesCount: "",
     preferredContactMethod: "",
     isAnonymous: false,
-    // TODO db: fetch current contact info
-    phoneNumber: "0722 deja imi suna cunoscut",
-    email: "email@email.com",
+  });
+  const [contactData, setContactData] = useState({
+    phoneNumber: "",
+    emailContact: "",
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (!user?.sub) return;
+    fetch(`/api/person/${user?.sub}/contact`)
+      .then((res) => res.json())
+      .then((contact) => setContactData(contact));
+  }, [user?.sub]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleSubmit = (event: FormEvent) => {
+    if (!isAuthenticated) {
+      return;
+    }
+    if (!user) {
+      setError("ERR: No user");
+      return;
+    }
+    fetch("/api/offers/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...state, personId: user.sub }),
+    })
+      .then()
+      .catch((err) => setError(err));
+
+    // TODO submit: confirmation page
+    event.preventDefault();
+    return false;
   };
 
   return (
@@ -59,11 +88,7 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
           pl: { xs: 0, md: "20%" },
         }}
         disabled={!isAuthenticated}
-        onSubmit={(e: FormEvent) => {
-          // TODO: handle submit -> this is called only when there are no validation errors left
-          e.preventDefault();
-          return false;
-        }}
+        onSubmit={handleSubmit}
       >
         <Box
           sx={{
@@ -124,10 +149,10 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
             />
             <TextField
               required
-              id="provide-help-maxPeopleCount"
-              name="maxPeopleCount"
-              label="maxPeopleCount"
-              value={state.maxPeopleCount}
+              id="provide-help-maxRefugeesCount"
+              name="maxRefugeesCount"
+              label="maxRefugeesCount"
+              value={state.maxRefugeesCount}
               onChange={handleChange}
               margin="normal"
               type="number"
@@ -146,17 +171,17 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
               >
                 <FormControlLabel
                   value="phone-call"
-                  control={<Radio sx={{ width: "fit-content" }} />}
+                  control={<Radio required sx={{ width: "fit-content" }} />}
                   label="Phone call"
                 />
                 <FormControlLabel
                   value="text-message"
-                  control={<Radio sx={{ width: "fit-content" }} />}
+                  control={<Radio required sx={{ width: "fit-content" }} />}
                   label="Text message"
                 />
                 <FormControlLabel
                   value="email"
-                  control={<Radio sx={{ width: "fit-content" }} />}
+                  control={<Radio required sx={{ width: "fit-content" }} />}
                   label="Email"
                 />
               </RadioGroup>
@@ -165,26 +190,27 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
             {(state.preferredContactMethod === "phone-call" ||
               state.preferredContactMethod === "text-message") && (
               <TextField
-                required
+                disabled
                 id="provide-help-phone-number"
-                name="phoneNumber"
                 label="Phone number"
-                value={state.phoneNumber}
-                onChange={handleChange}
+                value={contactData.phoneNumber}
                 margin="normal"
                 type="tel"
-                sx={{ maxWidth: "220px" }}
+                helperText={
+                  "If you want to use a different phone number, change your profile settings."
+                }
               />
             )}
 
             {state.preferredContactMethod === "email" && (
               <TextField
-                required
+                disabled
                 id="provide-help-email"
-                name="email"
                 label="Email address"
-                value={state.email}
-                onChange={handleChange}
+                value={contactData.emailContact}
+                helperText={
+                  "If you want to use a different email, change your profile settings."
+                }
                 margin="normal"
                 type="email"
               />
@@ -194,8 +220,13 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
               control={
                 <Checkbox
                   name="isAnonymous"
-                  value={state.isAnonymous}
-                  onChange={handleChange}
+                  checked={state.isAnonymous}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setState({
+                      ...state,
+                      [event.target.name]: event.target.checked,
+                    });
+                  }}
                 />
               }
               label="Do you want to remain anonymous?"
@@ -215,6 +246,7 @@ const ProvideHelpForm = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
           >
             Submit
           </Button>
+          {error && <Typography color="error">{error}</Typography>}
         </Box>
       </FormControl>
     </div>

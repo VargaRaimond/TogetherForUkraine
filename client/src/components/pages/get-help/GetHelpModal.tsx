@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Backdrop,
   Box,
@@ -8,10 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Delete, Send } from "@mui/icons-material";
-import { IOfferEntry } from "./GetHelpPage";
 import { getUserRolesObject } from "../../utils/authRoles";
-import { useAuth0 } from "@auth0/auth0-react";
 import IncompleteProfileNote from "./IncompleteProfileNote";
+import { IOfferWithVolunteerName } from "../../../api-interface/Offers";
 
 const boxStyle = {
   display: "flex",
@@ -35,11 +35,17 @@ const StyledButton = styled(Button)(() => ({
 }));
 
 const GetHelpModal = ({
-  handleClose,
   offer,
+  handleClose,
+  handleApplyNow,
+  handleDelete,
+  hasIncompleteProfile,
 }: {
-  handleClose: (open: boolean) => void;
-  offer?: IOfferEntry;
+  offer?: IOfferWithVolunteerName;
+  hasIncompleteProfile: boolean;
+  handleClose: () => void;
+  handleApplyNow: (offer?: IOfferWithVolunteerName) => void;
+  handleDelete: (offer?: IOfferWithVolunteerName) => void;
 }) => {
   const { user } = useAuth0();
   const open = useMemo(() => !!offer, [offer]);
@@ -47,9 +53,6 @@ const GetHelpModal = ({
   const { isAdmin, isRefugee } = useMemo(() => {
     return getUserRolesObject(user);
   }, [user]);
-
-  // TODO: actually check if the profile is complete or not
-  const hasIncompleteProfile = true;
 
   return (
     <Modal
@@ -66,7 +69,7 @@ const GetHelpModal = ({
       <Box sx={boxStyle}>
         <div style={{ display: "flex", alignItems: "end" }}>
           <Typography variant="h4" sx={{ margin: "10px 5px 0px 25px" }}>
-            {offer?.name}
+            {offer?.title}
           </Typography>
 
           <Typography variant="h6" sx={{ margin: "0 15px 0" }}>
@@ -79,16 +82,21 @@ const GetHelpModal = ({
         </Typography>
 
         <Typography variant="body2" sx={{ margin: "10px" }}>
-          Remaining: {offer?.remainingOffers} offers
+          Remaining:{" "}
+          {offer ? offer.maxRefugeesCount - offer.currentRefugeesCount : 0}{" "}
+          offers
         </Typography>
 
-        {/* TODO onClick modal: Send */}
         {isRefugee && (
           <>
             <StyledButton
               endIcon={<Send />}
               variant="contained"
               disabled={hasIncompleteProfile}
+              onClick={() => {
+                handleApplyNow(offer);
+                handleClose();
+              }}
             >
               Apply now
             </StyledButton>
@@ -96,12 +104,15 @@ const GetHelpModal = ({
           </>
         )}
 
-        {/* TODO onClick modal: Delete */}
         {isAdmin && (
           <StyledButton
             startIcon={<Delete />}
             variant="contained"
             color="error"
+            onClick={() => {
+              handleDelete(offer);
+              handleClose();
+            }}
           >
             Delete
           </StyledButton>

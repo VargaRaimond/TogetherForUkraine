@@ -7,6 +7,13 @@ export enum UserRoles {
   Admin = "admin",
 }
 
+export enum AuthRoleIds {
+  Guest = "",
+  Refugee = "rol_wX4m6l1IjTN4HOoB",
+  Volunteer = "rol_2JcCTJP5R6C5l2Af",
+  Admin = "rol_dGdadPE3ho7sj47R",
+}
+
 export interface IRolesObject {
   isVolunteer: boolean;
   isAdmin: boolean;
@@ -16,7 +23,9 @@ export interface IRolesObject {
 
 export const getUserRoles: (user: User | undefined) => string[] = (user) => {
   const namespace = "https://localhost:5001";
-  const userRoles: any[] = user ? user[`${namespace}/roles`] : ["guest"];
+  const userRoles: any[] = user
+    ? user[`${namespace}/roles`]
+    : [UserRoles.Guest];
 
   return userRoles;
 };

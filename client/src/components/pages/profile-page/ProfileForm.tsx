@@ -1,7 +1,9 @@
-import React from "react";
-import { Typography } from "@mui/material";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Typography } from "@mui/material";
 import EditableField from "./EditableField";
+import { IPerson } from "../../../api-interface/Person";
+import LoadingScreen from "../../utils/LoadingScreen";
 
 // todo: delete this -> I'm keeping it only for auth debugging
 export const RemovableJson = () => {
@@ -19,32 +21,67 @@ export const RemovableJson = () => {
 
 const ProfileForm = () => {
   const { user } = useAuth0();
+  const [personInfo, setPersonInfo] = useState<IPerson | undefined>(undefined);
 
-  const personInfo = {
-    name: "Bianca",
-    email: "bianca@example.com",
-    contactEmail: "bianca@example.com",
-    phoneNumber: "0722 deja imi suna cunoscut",
+  useEffect(() => {
+    if (!user?.sub) return;
+    fetch(`/api/person/${user.sub}/`)
+      .then((res) => res.json())
+      .then((dbPersonInfo) => setPersonInfo(dbPersonInfo));
+  }, [user?.sub]);
+
+  if (personInfo === undefined) {
+    return <LoadingScreen />;
+  }
+
+  const handleValueSubmit = async (fieldName: string) => {
+    await fetch(`api/person/${personInfo.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        [fieldName]: personInfo[fieldName as keyof typeof personInfo],
+      }),
+    });
+  };
+
+  const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPersonInfo({
+      ...personInfo,
+      [event.target.name]: event.target.value,
+    });
   };
 
   return (
     <>
-      <EditableField label="Name" initialValue={personInfo.name} />
+      <EditableField
+        label="Name"
+        name="name"
+        value={personInfo.name}
+        handleValueChange={handleValueChange}
+        handleValueSubmit={handleValueSubmit}
+      />
       <EditableField
         label="Account e-mail"
-        initialValue={user?.email || ""}
+        name=""
+        value={user?.email || ""}
         inputType="email"
         disableEdit
       />
       <EditableField
         label="Contact e-mail"
-        initialValue={personInfo.contactEmail}
+        name="emailContact"
+        value={personInfo.emailContact}
         inputType="email"
+        handleValueChange={handleValueChange}
+        handleValueSubmit={handleValueSubmit}
       />
       <EditableField
         label="Contact phone number"
-        initialValue={personInfo.phoneNumber}
+        name="phoneNumber"
+        value={personInfo.phoneNumber}
         inputType="tel"
+        handleValueChange={handleValueChange}
+        handleValueSubmit={handleValueSubmit}
       />
     </>
   );

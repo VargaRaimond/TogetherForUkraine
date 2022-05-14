@@ -10,12 +10,15 @@ import offersRoutes from "./src/routes/offersRoutes";
 import personRoutes from "./src/routes/personRoutes";
 import usagesRoutes from "./src/routes/usagesRoutes";
 import statsRoutes from "./src/routes/statsRoutes";
+import authRoutes from "./src/routes/authRoutes";
 
 const PORT = process.env.API_PORT || 5001;
 const audience = process.env.AUTH0_AUDIENCE || "http://together-for-ukraine";
 const issuer = process.env.AUTH0_ISSUER || "https://dev-gq9lbjoe.us.auth0.com/";
 
 const app = express();
+
+app.disable("etag");
 
 /** Logging */
 app.use(morgan("dev"));
@@ -42,6 +45,7 @@ app.listen(PORT, () => {
 });
 
 /** Routes */
+app.use("/api/auth/", authRoutes);
 app.use("/api/person/", personRoutes);
 app.use("/api/offers/", offersRoutes);
 app.use("/api/usages/", usagesRoutes);

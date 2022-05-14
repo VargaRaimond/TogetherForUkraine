@@ -13,18 +13,21 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
+import { AuthRoleIds } from "../utils/authRoles";
 
 interface INewAccount {
   name: string;
-  contactEmail: string;
+  emailContact: string;
   phoneNumber: string;
   role: string;
 }
 
 const RegisterPage = () => {
+  const { user } = useAuth0();
   const [state, setState] = React.useState<INewAccount>({
     name: "",
-    contactEmail: "",
+    emailContact: "",
     phoneNumber: "",
     role: "",
   });
@@ -33,6 +36,26 @@ const RegisterPage = () => {
     setState({
       ...state,
       [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (!user?.sub) return false;
+
+    fetch(`/api/auth/${user?.sub}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role: state.role }),
+    }).then(() => {
+      fetch("/api/person/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: user?.sub, ...state }),
+      }).then(() => {
+        window.location.reload();
+      });
     });
   };
 
@@ -48,11 +71,7 @@ const RegisterPage = () => {
           pl: { xs: 0, md: "20%" },
           mt: "5%",
         }}
-        onSubmit={(e: FormEvent) => {
-          // TODO: handle submit -> this is called only when there are no validation errors left
-          e.preventDefault();
-          return false;
-        }}
+        onSubmit={handleSubmit}
       >
         <Box
           sx={{
@@ -87,9 +106,9 @@ const RegisterPage = () => {
             <TextField
               required
               id="register-contact-email"
-              name="contactEmail"
+              name="emailContact"
               label="Contact e-mail"
-              value={state.contactEmail}
+              value={state.emailContact}
               onChange={handleChange}
               margin="normal"
               type="email"
@@ -115,13 +134,13 @@ const RegisterPage = () => {
                 sx={{ width: "fit-content" }}
               >
                 <FormControlLabel
-                  value="refugee"
-                  control={<Radio sx={{ width: "fit-content" }} />}
+                  value={AuthRoleIds.Refugee}
+                  control={<Radio required sx={{ width: "fit-content" }} />}
                   label="I'm a refugee and I'd like to get help."
                 />
                 <FormControlLabel
-                  value="volunteer"
-                  control={<Radio sx={{ width: "fit-content" }} />}
+                  value={AuthRoleIds.Volunteer}
+                  control={<Radio required sx={{ width: "fit-content" }} />}
                   label="I'd like to volunteer and provide help for others."
                 />
               </RadioGroup>

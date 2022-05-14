@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import CountUp from "react-countup";
 
 const StatsGrid = () => {
-  // TODO db: get this from somewhere
-  const stats = {
-    activeVolunteers: 5,
-    helpedPeople: 1235,
-    activeOffers: 125,
-    totalOffers: 12133,
-  };
+  const [stats, setStats] = useState({
+    activeVolunteers: 0,
+    helpedPeople: 0,
+    activeOffers: 0,
+    totalOffers: 0,
+  });
+
+  useEffect(() => {
+    fetch("/api/stats/")
+      .then((res) => res.json())
+      .then((dbStats) => setStats(dbStats));
+  }, []);
 
   const getFormattedCount = (count: number) => {
     if (count >= 10000) {

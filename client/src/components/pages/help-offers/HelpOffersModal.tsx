@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Cancel, Check } from "@mui/icons-material";
-import { IHelpOffers } from "./HelpOffers";
+import { IOfferWithVolunteer } from "../../../api-interface/Offers";
 
 const boxStyle = {
   display: "flex",
@@ -36,10 +36,10 @@ const HelpOffersModal = ({
   handleAccept,
   handleDecline,
 }: {
-  offer?: IHelpOffers;
+  offer?: IOfferWithVolunteer;
   handleClose: () => void;
-  handleAccept: (offer: IHelpOffers) => void;
-  handleDecline: (offer: IHelpOffers) => void;
+  handleAccept: (offer: IOfferWithVolunteer) => void;
+  handleDecline: (offer: IOfferWithVolunteer) => void;
 }) => {
   const open = useMemo(() => !!offer, [offer]);
 
@@ -67,7 +67,7 @@ const HelpOffersModal = ({
       <Box sx={boxStyle}>
         <div style={{ display: "flex", alignItems: "end" }}>
           <Typography variant="h4" sx={{ margin: "10px 5px 0px 25px" }}>
-            {offer?.name}
+            {offer?.title}
           </Typography>
 
           <Typography variant="h6" sx={{ margin: "0 15px 0" }}>
@@ -80,22 +80,23 @@ const HelpOffersModal = ({
         </Typography>
 
         <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>
-          <b>Number of offers:</b> {offer?.remainingOffers}
+          <b>Number of offers: </b>
+          {offer ? offer.maxRefugeesCount - offer.currentRefugeesCount : 0}
         </Typography>
 
         <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>
-          <b>Volunteer:</b> {offer?.volunteer}
-          <i>{!offer?.isAnonymous && "  (Wants to remain anonymous)"}</i>
+          <b>Volunteer:</b> {offer?.volunteerName}
+          <i>{offer?.isAnonymous && "  (Wants to remain anonymous)"}</i>
         </Typography>
 
         <Typography variant="body2" sx={{ mt: "5px", ml: "10px", mb: "5px" }}>
           <b>Contact Info:</b>
         </Typography>
         <Typography variant="body2" sx={{ mt: "5px", mb: "5px", ml: "20px" }}>
-          <b>Phone number:</b> {offer?.phoneNumber}
+          <b>Phone number:</b> {offer?.volunteerPhoneNumber}
         </Typography>
         <Typography variant="body2" sx={{ mt: "5px", mb: "5px", ml: "20px" }}>
-          <b>E-mail:</b> {offer?.email}
+          <b>E-mail:</b> {offer?.volunteerContactEmail}
         </Typography>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>

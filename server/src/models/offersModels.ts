@@ -7,13 +7,13 @@ export interface IDbNewOffer {
   location: string;
   category: string;
   max_refugees_count: number;
-  current_refugees_count: number;
   is_anonymous: boolean;
   preferred_contact_method: string;
 }
 
 export interface IDbOffer extends IDbNewOffer {
   id: string;
+  current_refugees_count: number;
   created_at: Date;
   updated_at: Date;
   is_approved: boolean;
@@ -26,7 +26,6 @@ export interface INewOffer {
   location: string;
   category: string;
   maxRefugeesCount: number;
-  currentRefugeesCount: number;
   isAnonymous: boolean;
   preferredContactMethod: string;
 }
@@ -58,7 +57,6 @@ export const validateNewOffer = yup.object({
   location: yup.string().required(),
   category: yup.string().required(),
   maxRefugeesCount: yup.number().required(),
-  currentRefugeesCount: yup.number().required(),
   isAnonymous: yup.boolean().required(),
   preferredContactMethod: yup.string().required(),
 });
@@ -104,7 +102,6 @@ export const convertNewOfferApiToDb: (offer: INewOffer) => IDbNewOffer = (
   location: offer.location,
   category: offer.category,
   max_refugees_count: offer.maxRefugeesCount,
-  current_refugees_count: offer.currentRefugeesCount,
   is_anonymous: offer.isAnonymous,
   preferred_contact_method: offer.preferredContactMethod,
 });

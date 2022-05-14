@@ -1,61 +1,70 @@
-import React, { useMemo, useState } from "react";
-import { PageWrapper } from "../../utils/CommonComponents";
-import { IOfferEntry } from "../get-help/GetHelpPage";
+import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
+import { PageWrapper } from "../../utils/CommonComponents";
 import GenericTable from "../../utils/table/GenericTable";
 import HelpOffersModal from "./HelpOffersModal";
-import { mockOffers } from "../../0-mock-data/mock-offers";
-
-export interface IHelpOffers extends IOfferEntry {
-  date: Date;
-  phoneNumber: string;
-  email: string;
-  isAnonymous?: boolean;
-}
-
-const staticRows: IHelpOffers[] = mockOffers.map((offer) => ({
-  ...offer,
-  phoneNumber: "0722 072 072",
-  email: "email@email.com",
-  isAnonymous: offer.category === "Money",
-}));
+import { IOfferWithVolunteer } from "../../../api-interface/Offers";
+import LoadingScreen from "../../utils/LoadingScreen";
+import ErrorScreen from "../../utils/ErrorScreen";
 
 const headCells = [
-  { id: "date", label: "Date" },
-  { id: "name", label: "Name" },
+  { id: "createdAt", label: "Date" },
+  { id: "title", label: "Title" },
   { id: "category", label: "Category" },
   { id: "location", label: "Location" },
-  { id: "volunteer", label: "Volunteer" },
+  { id: "volunteerName", label: "Volunteer" },
   { id: "seeMore" },
 ];
 
 const HelpOffersPage = () => {
-  const [modalOffer, setModalOffer] = useState<IHelpOffers | undefined>(
+  const [error, setError] = useState("");
+  const [offers, setOffers] = useState<IOfferWithVolunteer[] | undefined>(
+    undefined
+  );
+  const [modalOffer, setModalOffer] = useState<IOfferWithVolunteer | undefined>(
     undefined
   );
 
-  const initialOffers = useMemo(
-    () =>
-      staticRows.map((offer) => ({
-        ...offer,
-        seeMore: (
-          <Button onClick={() => setModalOffer(offer)} variant="contained">
-            See more
-          </Button>
-        ),
-      })),
-    []
-  );
+  useEffect(() => {
+    fetch("/api/offers/pending")
+      .then((response) => response.json())
+      .then((dbOffers: IOfferWithVolunteer[]) => {
+        const completeOfferRows = dbOffers.map((offer) => ({
+          ...offer,
+          createdAt: new Date(offer.createdAt),
+          seeMore: (
+            <Button onClick={() => setModalOffer(offer)} variant="contained">
+              See more
+            </Button>
+          ),
+        }));
 
-  const [offers, setOffers] = useState(initialOffers);
+        setOffers(completeOfferRows);
+      })
+      .catch((e) => setError(e));
+  }, []);
 
-  const handleOfferAccept = (offer: IHelpOffers) => {
-    // TODO db: handle accept
+  if (offers === undefined) {
+    return <LoadingScreen />;
+  }
+
+  if (error) {
+    return <ErrorScreen error={error} />;
+  }
+
+  const handleOfferAccept = (offer: IOfferWithVolunteer) => {
+    // TODO mail?
+    fetch(`/api/offers/${offer.id}/accept`, { method: "PUT" }).catch((e) =>
+      setError(e)
+    );
     setOffers(offers.filter((o) => o.id !== offer.id));
   };
 
-  const handleOfferDecline = (offer: IHelpOffers) => {
-    // TODO db: handle decline
+  const handleOfferDecline = (offer: IOfferWithVolunteer) => {
+    // TODO mail?
+    fetch(`/api/offers/${offer.id}`, { method: "DELETE" }).catch((e) =>
+      setError(e)
+    );
     setOffers(offers.filter((o) => o.id !== offer.id));
   };
 
