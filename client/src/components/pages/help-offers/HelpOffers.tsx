@@ -52,19 +52,29 @@ const HelpOffersPage = () => {
     return <ErrorScreen error={error} />;
   }
 
+  const sendEmail = (path: string, offer: IOfferWithVolunteer) => {
+    fetch(path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        volunteerContactEmail: offer.volunteerContactEmail,
+        volunteerName: offer.volunteerName,
+        offerTitle: offer.title,
+      }),
+    }).catch((e) => setError(e));
+  };
+
   const handleOfferAccept = (offer: IOfferWithVolunteer) => {
-    // TODO mail?
-    fetch(`/api/offers/${offer.id}/accept`, { method: "PUT" }).catch((e) =>
-      setError(e)
-    );
+    fetch(`/api/offers/${offer.id}/accept`, { method: "PUT" })
+      .then(() => sendEmail(`/api/mail-queue/offer-accepted`, offer))
+      .catch((e) => setError(e));
     setOffers(offers.filter((o) => o.id !== offer.id));
   };
 
   const handleOfferDecline = (offer: IOfferWithVolunteer) => {
-    // TODO mail?
-    fetch(`/api/offers/${offer.id}`, { method: "DELETE" }).catch((e) =>
-      setError(e)
-    );
+    fetch(`/api/offers/${offer.id}`, { method: "DELETE" })
+      .then(() => sendEmail(`/api/mail-queue/offer-declined`, offer))
+      .catch((e) => setError(e));
     setOffers(offers.filter((o) => o.id !== offer.id));
   };
 

@@ -9,3 +9,7 @@
 | Yaroslava Iolanta | auth0\627aa11293f62100671c14e0 |    yaroslava@refugee.com    |   Test1234   |  refugee  |
 
 
+## Gmail data
+pw.idp.together.for.ukraine@gmail.com
+PW_IDP_PASSWORD_123
+14 MAI 1999
