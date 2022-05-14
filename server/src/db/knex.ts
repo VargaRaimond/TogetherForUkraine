@@ -3,11 +3,11 @@ import { knex, Knex } from "knex";
 const config: Knex.Config = {
   client: "postgres",
   connection: {
-    host: "localhost",
+    password: process.env.DB_PASSWORD,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
     port: 5432,
-    user: "postgres",
-    password: "postgres",
-    database: "postgres",
   },
   useNullAsDefault: true,
   seeds: {

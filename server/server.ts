@@ -11,7 +11,7 @@ import statsRoutes from "./src/routes/statsRoutes";
 import authRoutes from "./src/routes/authRoutes";
 import mailQRoutes from "./src/routes/mailQRoutes";
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.API_PORT || 5001;
 
 const app = express();
 

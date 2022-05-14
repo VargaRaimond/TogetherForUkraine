@@ -17,9 +17,10 @@ services:
       - '${DB_PORT}:${DB_PORT_TARGET}'
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./sql/createTables.sql:/docker-entrypoint-initdb.d/createTables.sql  # copy the sql script to create tables
+      - ./server/sql/createTables.sql:/docker-entrypoint-initdb.d/createTables.sql  # copy the sql script to create tables
     networks:
       - db
+      - app-network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -32,9 +33,40 @@ services:
     networks:
       - db
 
+  server:
+    env_file: .env
+    build: server
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    image: api-server
+    container_name: api-server
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    networks:
+      - app-network
+
+  client:
+    env_file: .env
+    build: client
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    image: client
+    container_name: client
+    ports:
+      - "${PORT}:${PORT}"
+    networks:
+      - app-network
+
 volumes:
   postgres-data: {}
 
 networks:
   db:
     name: 'db-network'
+  app-network:
+    name: 'app-network'
+

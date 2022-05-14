@@ -1,8 +1,8 @@
 FROM node:16
 
-WORKDIR /home/server
+WORKDIR /home/client
 
 COPY package*.json ./
 RUN npm install
 COPY . .
-CMD npm run seeds & npm run server
+CMD npm run start
