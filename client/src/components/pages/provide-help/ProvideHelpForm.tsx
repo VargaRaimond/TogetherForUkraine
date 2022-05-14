@@ -100,7 +100,6 @@ const ProvideHelpForm = ({
       .then()
       .catch((err) => setError(err));
 
-    // TODO submit: confirmation page
     setIsSubmitted(true);
     clearForm();
     event.preventDefault();
