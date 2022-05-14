@@ -69,10 +69,24 @@ const GetHelpPage = () => {
       });
   }, [user?.sub]);
 
+  const sendApplyNowEmail = (offer: IOfferWithVolunteerName) => {
+    fetch(`/api/mail-queue/new-application`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        refugeeId: user?.sub,
+        volunteerId: offer.personId,
+        offerTitle: offer.title,
+        offerDescription: offer.description,
+        isVolunteerAnonymous: offer.isAnonymous,
+        preferredContactMethod: offer.preferredContactMethod,
+      }),
+    }).catch((e) => setError(e));
+  };
+
   const handleApplyNow = (offer?: IOfferWithVolunteerName) => {
     if (!offer) return;
 
-    // TODO mail?
     fetch(`/api/usages/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -84,17 +98,29 @@ const GetHelpPage = () => {
           setInitialOffers(initialOffers?.filter((o) => o.id !== offer.id));
           setOffers(offers.filter((o) => o.id !== offer.id));
         }
+        sendApplyNowEmail(offer);
       }
     });
+  };
+
+  const sendDeleteEmail = (offer: IOfferWithVolunteerName) => {
+    fetch(`/api/mail-queue/offer-removed`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        volunteerId: offer.personId,
+        volunteerName: offer.volunteerName,
+        offerTitle: offer.title,
+      }),
+    }).catch((e) => setError(e));
   };
 
   const handleDelete = (offer?: IOfferWithVolunteerName) => {
     if (!offer) return;
 
-    // TODO mail?
-    fetch(`/api/offers/${offer.id}`, { method: "DELETE" }).catch((e) =>
-      setError(e)
-    );
+    fetch(`/api/offers/${offer.id}`, { method: "DELETE" })
+      .then(() => sendDeleteEmail(offer))
+      .catch((e) => setError(e));
     setInitialOffers(initialOffers?.filter((o) => o.id !== offer.id));
     setOffers(offers.filter((o) => o.id !== offer.id));
   };
