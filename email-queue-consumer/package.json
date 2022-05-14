@@ -7,19 +7,17 @@
     "start": "node dist/server.js",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc --project .",
-    "consumer": "nodemon --verbose --watch \\\"consumer\\\" --ext \\\"ts,json\\\" --exec ts-node index.ts"
+    "consumer": "nodemon --verbose --watch \\\"src\\\" --ext \\\"ts,json\\\" --exec ts-node index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.9.0",
-    "cloudmailin": "^0.0.3",
     "nodemailer": "^6.7.5"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
-    "concurrently": "^7.0.0",
     "nodemon": "^2.0.15",
     "prettier": "2.5.1",
     "ts-node": "^10.7.0",
