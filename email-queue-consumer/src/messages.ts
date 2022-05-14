@@ -1,35 +1,44 @@
-const offerAcceptedMessage = (volunteerEmail, { name, offerTitle }) => ({
+const offerAcceptedMessage = (
+  volunteerEmail,
+  { volunteerName, offerTitle }
+) => ({
   from: `pw.idp.together.for.ukraine@gmail.com`,
   to: volunteerEmail,
   subject: `[Together for Ukraine] Offer Accepted`,
   html:
     `<h3>Congrats! Your offer has just been approved.</h3><br/>` +
-    `<p>Hello ${name}</p><br/>` +
-    `<p> Thank you for offering your help. We're happy to announce you that your offer has just been approved. The offerTitle of the accepted offer is ${offerTitle}.</p><br/>` +
+    `<p>Hello ${volunteerName}</p><br/>` +
+    `<p> Thank you for offering your help. We're happy to announce you that your offer has just been approved. The title of the accepted offer is ${offerTitle}.</p><br/>` +
     `<p> Have an amazing day,</p>` +
     `<p> Together for Ukraine team</p>`,
 });
 
-const offerDeclinedMessage = (volunteerEmail, { name, offerTitle }) => ({
+const offerDeclinedMessage = (
+  volunteerEmail,
+  { volunteerName, offerTitle }
+) => ({
   from: `pw.idp.together.for.ukraine@gmail.com`,
   to: volunteerEmail,
   subject: `[Together for Ukraine] Offer Declined`,
   html:
     `<h3>Your offer has just been declined.</h3><br/>\n` +
-    `<p>Hello ${name}</p><br/>` +
-    `<p> Thank you for offering your help. Unfortunately, we decided not to move forward with your offer. The offerTitle of the declined offer is ${offerTitle}.</p><br/>` +
+    `<p>Hello ${volunteerName}</p><br/>` +
+    `<p> Thank you for offering your help. Unfortunately, we decided not to move forward with your offer. The title of the declined offer is ${offerTitle}.</p><br/>` +
     `<p> Have an amazing day,</p>` +
     `<p> Together for Ukraine team</p>`,
 });
 
-const offerDeletedMessage = (volunteerEmail, { name, offerTitle }) => ({
+const offerDeletedMessage = (
+  volunteerEmail,
+  { volunteerName, offerTitle }
+) => ({
   from: `pw.idp.together.for.ukraine@gmail.com`,
   to: volunteerEmail,
   subject: `[Together for Ukraine] Offer Removed`,
   html:
     `<h3>Your offer has just been removed.</h3><br/>` +
-    `<p>Hello ${name}</p><br/>` +
-    `<p> Thank you for offering your help. Unfortunately, we decided to remove your offer. The offerTitle of the removed offer is ${offerTitle}.</p><br/>` +
+    `<p>Hello ${volunteerName}</p><br/>` +
+    `<p> Thank you for offering your help. Unfortunately, we decided to remove your offer. The title of the removed offer is ${offerTitle}.</p><br/>` +
     `<p> Have an amazing day,</p>` +
     `<p> Together for Ukraine team</p>`,
 });
@@ -44,7 +53,7 @@ const newApplicationVolunteerMessage = (
   html:
     `<h3>Congratulations! You have another applicant.</h3><br/>\n` +
     `<p>Hello ${volunteerName}</p><br/>` +
-    `<p> A refugee has just applied for your offer. This offer's offerTitle is: ${offerTitle}. Below are the necessary info to get in touch with the applicant.</p>` +
+    `<p> A refugee has just applied for your offer. This offer's title is: ${offerTitle}. Below are the necessary info to get in touch with the applicant.</p>` +
     `<b><p>Name: ${refugeeName}</p>` +
     `<p>Phone number: ${refugeePhoneNumber}</p>` +
     `<p>Email: ${refugeeEmail}</p></b><br/>` +
@@ -69,7 +78,7 @@ const newApplicationRefugeeMessage = (
     `<h3>Congratulations! You successfully applied for a new offer.</h3><br/>\n` +
     `<p>Hello ${refugeeName}</p><br/>` +
     `<p> Thank you for letting us help you. Your application was successful. Here are the offer's details:</p>` +
-    `<b><p>offerTitle: ${offerTitle}</p>` +
+    `<b><p>Title: ${offerTitle}</p>` +
     `<p>Description: ${description}</p></b>` +
     (isVolunteerAnonymous ? `` : `<b><p>Contact: ${volunteerContact}</p></b>`) +
     `<p>You will be contacted soon.</p><br/>` +
