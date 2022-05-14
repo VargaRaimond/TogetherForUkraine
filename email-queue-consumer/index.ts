@@ -10,8 +10,15 @@ connection.then(async (conn) => {
   const channel = await conn.createChannel();
   channel.consume(QUEUE_NAME, (m) => {
     const message = JSON.parse(m.content);
-    console.log(message);
-    sendEmail();
+    const { emailContact, messageType, ...messageBody } = message;
+
+    if (emailContact && messageType && messageBody) {
+      sendEmail(emailContact, messageType, messageBody);
+    } else {
+      // tslint:disable-next-line:no-console
+      console.log("Missing parameters");
+    }
+
     channel.ack(m);
   });
 });
