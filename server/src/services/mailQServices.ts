@@ -1,4 +1,6 @@
 import amqplib from "amqplib";
+import { Response } from "express";
+import { IOfferActionMail } from "../models/mailQModels";
 
 // TODO: maybe env?
 const QUEUE_NAME = "emailQ";
@@ -21,4 +23,19 @@ export const addEmailToQueue = async (message, res) => {
   } catch (e) {
     res.send({ msg: "Failed" });
   }
+};
+
+export const addOfferActionMail = async (
+  mailData: IOfferActionMail,
+  res: Response,
+  messageType
+) => {
+  const emailContact = mailData.volunteerContactEmail;
+
+  const messageBody = {
+    volunteerName: mailData.volunteerName,
+    offerTitle: mailData.offerTitle,
+  };
+
+  await addEmailToQueue({ emailContact, messageType, ...messageBody }, res);
 };
