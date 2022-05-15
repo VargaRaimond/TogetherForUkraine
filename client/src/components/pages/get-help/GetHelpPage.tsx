@@ -99,6 +99,7 @@ const GetHelpPage = () => {
           setOffers(offers.filter((o) => o.id !== offer.id));
         }
       }
+      // TODO check this Bianca
       sendApplyNowEmail(offer);
     });
   };
