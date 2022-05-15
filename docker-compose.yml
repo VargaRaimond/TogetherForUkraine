@@ -23,19 +23,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./server/sql/createTables.sql:/docker-entrypoint-initdb.d/createTables.sql  # copy the sql script to create tables
     networks:
-      - db
       - app-network
-
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
-      PGADMIN_DEFAULT_PASSWORD: 'root'
-    ports:
-      - "5050:80"
-    networks:
-      - db
 
   server:
     environment:
@@ -105,8 +93,6 @@ volumes:
   postgres-data: {}
 
 networks:
-  db:
-    name: 'db-network'
   app-network:
     name: 'app-network'
   rmq:
