@@ -7,32 +7,24 @@ const EXCHANGE_TYPE = "direct";
 const EXCHANGE_NAME = "main";
 const KEY = "myKey";
 
-setTimeout(() => {
-  const connection = amqplib.connect("amqp://rabbitmq");
+const connection = amqplib.connect("amqp://rabbitmq");
 
-  connection.then(async (conn) => {
-    try {
-      const channel = await conn.createChannel();
-      await channel.assertExchange(EXCHANGE_NAME, EXCHANGE_TYPE);
-      await channel.assertQueue(QUEUE_NAME);
-      channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, KEY);
-      channel.consume(QUEUE_NAME, (m) => {
-        const message = JSON.parse(m.content);
-        const { emailContact, messageType, ...messageBody } = message;
+connection.then(async (conn) => {
+  const channel = await conn.createChannel();
+  await channel.assertExchange(EXCHANGE_NAME, EXCHANGE_TYPE);
+  await channel.assertQueue(QUEUE_NAME);
+  channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, KEY);
+  channel.consume(QUEUE_NAME, (m) => {
+    const message = JSON.parse(m.content);
+    const { emailContact, messageType, ...messageBody } = message;
 
-        if (emailContact && messageType && messageBody) {
-          sendEmail(emailContact, messageType, messageBody);
-        } else {
-          // tslint:disable-next-line:no-console
-          console.log("Missing parameters");
-        }
-
-        channel.ack(m);
-      });
-    } catch (e) {
+    if (emailContact && messageType && messageBody) {
+      sendEmail(emailContact, messageType, messageBody);
+    } else {
       // tslint:disable-next-line:no-console
-      console.log("Connection error:", e);
-      process.exit(-1);
+      console.log("Missing parameters");
     }
+
+    channel.ack(m);
   });
-}, 10000);
+});

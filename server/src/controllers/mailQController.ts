@@ -37,6 +37,7 @@ export default class MailQController extends Controller {
 
     const mailDataWithEmail = {
       ...mailData,
+      volunteerName: person.name,
       volunteerContactEmail: person.emailContact,
     } as unknown as IOfferActionMail;
 
