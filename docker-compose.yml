@@ -58,6 +58,7 @@ services:
       - "5001:5001"
     networks:
       - app-network
+      - rmq
 
   client:
     environment:
@@ -74,6 +75,32 @@ services:
     networks:
       - app-network
 
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+    networks:
+      - rmq
+    hostname: rabbitmq
+
+  rabbitmq-worker:
+    image: rabbitmq-worker
+    restart: always
+    depends_on:
+      - rabbitmq
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+    networks:
+      - rmq
+
+
 volumes:
   postgres-data: {}
 
@@ -82,4 +109,6 @@ networks:
     name: 'db-network'
   app-network:
     name: 'app-network'
+  rmq:
+    name: 'rabbitmq'
 

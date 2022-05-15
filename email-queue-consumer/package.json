@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "node dist/index.js",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc --project .",
-    "consumer": "nodemon --verbose --watch \\\"src\\\" --ext \\\"ts,json\\\" --exec ts-node index.ts"
+    "consumer": "npm run build && npm run start ",
+    "consumer-dev": "nodemon --verbose --watch \\\"src\\\" --ext \\\"ts,json\\\" --exec ts-node index.ts"
   },
   "keywords": [],
   "author": "",

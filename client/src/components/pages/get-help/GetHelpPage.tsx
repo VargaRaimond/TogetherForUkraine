@@ -98,8 +98,9 @@ const GetHelpPage = () => {
           setInitialOffers(initialOffers?.filter((o) => o.id !== offer.id));
           setOffers(offers.filter((o) => o.id !== offer.id));
         }
-        sendApplyNowEmail(offer);
       }
+      // TODO check this Bianca
+      sendApplyNowEmail(offer);
     });
   };
 
