@@ -36,6 +36,11 @@ services:
     links:
       - postgres
     image: server:latest
+    logging:
+      driver: loki
+      options:
+        loki-url: http://host.docker.internal:3100/loki/api/v1/push
+        loki-external-labels: job=myjob,owner=radu,environment=development
     deploy:
       resources:
         limits:
@@ -47,21 +52,30 @@ services:
     networks:
       - app-network
       - rmq
+      - logging
+
 
   client:
     environment:
-      PORT: '3000'
+      PORT: '8080'
     depends_on:
       - postgres
     links:
       - postgres
     image: client:latest
+    logging:
+      driver: loki
+      options:
+        loki-url: http://host.docker.internal:3100/loki/api/v1/push
+        loki-external-labels: job=myjob,owner=radu,environment=development
     container_name: client
     hostname: client
     ports:
-      - "3000:3000"
+      - "8080:8080"
     networks:
       - app-network
+      - logging
+
 
   rabbitmq:
     image: rabbitmq:management-alpine
@@ -78,6 +92,11 @@ services:
 
   rabbitmq-worker:
     image: rabbitmq-worker
+    logging:
+      driver: loki
+      options:
+        loki-url: http://host.docker.internal:3100/loki/api/v1/push
+        loki-external-labels: job=myjob,owner=radu,environment=development
     restart: always
     depends_on:
       - rabbitmq
@@ -87,14 +106,48 @@ services:
           memory: 700M
     networks:
       - rmq
+      - logging
 
+  # docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+  loki:
+    image: grafana/loki
+    volumes:
+      - ./configs/loki.yml:/etc/config/loki.yml
+      - ./configs/wal:/wal
+    entrypoint:
+      - /usr/bin/loki
+      - -config.file=/etc/config/loki.yml
+    ports:
+      - "3100:3100"
+    networks:
+      - logging
+      - visualizing
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - grafana-volume:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - visualizing
 
 volumes:
   postgres-data: {}
+  grafana-volume: {}
 
 networks:
   app-network:
     name: 'app-network'
   rmq:
     name: 'rabbitmq'
+  logging:
+    name: 'logging'
+  visualizing:
+    name: 'visualizing'
 
