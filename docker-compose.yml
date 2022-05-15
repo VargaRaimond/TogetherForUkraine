@@ -127,6 +127,8 @@ services:
     image: grafana/grafana
     volumes:
       - grafana-volume:/var/lib/grafana
+      - ./configs/grafana/provisioning:/etc/grafana/provisioning/
+      - ./configs/grafana/dashboards:/var/lib/grafana/dashboards
     ports:
       - "3000:3000"
     depends_on:
