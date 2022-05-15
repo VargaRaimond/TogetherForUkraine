@@ -33,8 +33,6 @@ services:
       POSTGRES_PASSWORD: 'postgres'
     depends_on:
       - postgres
-    links:
-      - postgres
     image: server:latest
     logging:
       driver: loki
@@ -53,7 +51,6 @@ services:
       - app-network
       - rmq
       - logging
-
 
   client:
     environment:
@@ -75,7 +72,6 @@ services:
     networks:
       - app-network
       - logging
-
 
   rabbitmq:
     image: rabbitmq:management-alpine
