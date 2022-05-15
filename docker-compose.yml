@@ -58,6 +58,7 @@ services:
       - "5001:5001"
     networks:
       - app-network
+      - rmq
 
   client:
     environment:
@@ -109,4 +110,5 @@ networks:
   app-network:
     name: 'app-network'
   rmq:
+    name: 'rabbitmq'
 
