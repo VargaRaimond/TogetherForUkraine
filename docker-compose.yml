@@ -58,15 +58,12 @@ services:
       PORT: '4000'
     depends_on:
       - postgres
-    links:
-      - postgres
     image: client:latest
     logging:
       driver: loki
       options:
         loki-url: http://host.docker.internal:3100/loki/api/v1/push
         loki-external-labels: job=client,environment=development
-    container_name: client
     hostname: client
     ports:
       - "4000:4000"
@@ -109,10 +106,10 @@ services:
   kong:
     image: kong:latest
     volumes:
-      - ./configs/kong:/usr/local/kong/declarative #injectarea fisierului de configurare la calea specificata
+      - ./configs/kong:/usr/local/kong/declarative
     environment:
-      KONG_DATABASE: 'off' #obligatoriu, daca se vrea modul DB-less
-      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong-config.yml #trebuie specificat unde anume se va gasi fisierul de configuyrare
+      KONG_DATABASE: 'off'
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong-config.yml
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG: /dev/stderr
@@ -160,8 +157,20 @@ services:
     networks:
       - visualizing
 
+  jenkins:
+    image: jenkins/jenkins:latest
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    container_name: jenkins
+    volumes:
+      - jenkins-data:/var/jenkins_home
+
 volumes:
   postgres-data: {}
+  jenkins-data: {}
   grafana-volume: {}
 
 networks:
