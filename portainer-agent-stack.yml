@@ -12,6 +12,9 @@ services:
       mode: global
       placement:
         constraints: [node.platform.os == linux]
+      resources:
+        limits:
+          memory: 300M
 
   portainer:
     image: portainer/portainer-ce:2.11.1
@@ -19,7 +22,6 @@ services:
     ports:
       - "9443:9443"
       - "9000:9000"
-      - "8000:8000"
     volumes:
       - portainer_data:/data
     networks:
@@ -29,6 +31,9 @@ services:
       replicas: 1
       placement:
         constraints: [node.role == manager]
+      resources:
+        limits:
+          memory: 300M
 
 networks:
   agent_network:
