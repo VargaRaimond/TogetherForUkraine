@@ -22,15 +22,15 @@
     ]
   },
   "editable": true,
-  "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "P8E80F9AEF21F6940"
+      "datasource": "Loki",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -56,6 +56,7 @@
             "uid": "P8E80F9AEF21F6940"
           },
           "expr": "{job=~\"client|emailworker|server\"}",
+          "queryType": "measurements",
           "refId": "A"
         }
       ],
@@ -63,8 +64,8 @@
       "type": "logs"
     }
   ],
-  "refresh": "",
-  "schemaVersion": 36,
+  "refresh": "5s",
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -78,6 +79,5 @@
   "timezone": "",
   "title": "Dashboard",
   "uid": "vRn__4unz",
-  "version": 1,
-  "weekStart": ""
+  "version": 1
 }
