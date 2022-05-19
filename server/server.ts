@@ -25,6 +25,7 @@ app.use(express.json());
 app.use(express.static("../client/build"));
 
 app.listen(PORT, () => {
+  // tslint:disable-next-line:no-console
   console.log(`Server listening on ${PORT}`);
 });
 
@@ -35,10 +36,6 @@ app.use("/api/offers/", offersRoutes);
 app.use("/api/usages/", usagesRoutes);
 app.use("/api/stats/", statsRoutes);
 app.use("/api/mail-queue/", mailQRoutes);
-
-app.get("/api/hello", (req, res) => {
-  res.send({ message: "Hello" });
-});
 
 // All other unmatched requests will return the React app
 app.get("/", (req, res) => {

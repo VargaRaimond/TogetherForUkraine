@@ -12,13 +12,13 @@ const transporter = nodemailer.createTransport({
 export const sendEmail = (emailContact, messageType, messageBody) => {
   const message = getMessage(messageType, emailContact, messageBody);
 
-  transporter.sendMail(message, (err, info) => {
+  transporter.sendMail(message, (err) => {
     if (err) {
       // tslint:disable-next-line:no-console
-      console.log(err);
+      console.log(`Error while sending ${messageType} mail: ${err}`);
     } else {
       // tslint:disable-next-line:no-console
-      console.log(info);
+      console.log(`${messageType} mail successfully sent to ${emailContact}`);
     }
   });
 };
