@@ -33,9 +33,12 @@ services:
       POSTGRES_PASSWORD: 'postgres'
     depends_on:
       - postgres
-    links:
-      - postgres
     image: server:latest
+    logging:
+      driver: loki
+      options:
+        loki-url: http://host.docker.internal:3100/loki/api/v1/push
+        loki-external-labels: job=server,environment=development
     deploy:
       resources:
         limits:
@@ -48,22 +51,29 @@ services:
       - app-network
       - rmq
       - internal
+      - logging
 
   client:
     environment:
-      PORT: '3000'
+      PORT: '4000'
     depends_on:
       - postgres
     links:
       - postgres
     image: client:latest
+    logging:
+      driver: loki
+      options:
+        loki-url: http://host.docker.internal:3100/loki/api/v1/push
+        loki-external-labels: job=client,environment=development
     container_name: client
     hostname: client
     ports:
-      - "3000:3000"
+      - "4000:4000"
     networks:
       - app-network
       - internal
+      - logging
 
   rabbitmq:
     image: rabbitmq:management-alpine
@@ -80,6 +90,11 @@ services:
 
   rabbitmq-worker:
     image: rabbitmq-worker
+    logging:
+      driver: loki
+      options:
+        loki-url: http://host.docker.internal:3100/loki/api/v1/push
+        loki-external-labels: job=emailworker,environment=development
     restart: always
     depends_on:
       - rabbitmq
@@ -89,6 +104,7 @@ services:
           memory: 300M
     networks:
       - rmq
+      - logging
 
   kong:
     image: kong:latest
@@ -113,9 +129,40 @@ services:
     networks:
      - internal
 
+  # docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+  loki:
+    image: grafana/loki
+    volumes:
+      - ./configs/loki.yml:/etc/config/loki.yml
+      - ./configs/wal:/wal
+    entrypoint:
+      - /usr/bin/loki
+      - -config.file=/etc/config/loki.yml
+    ports:
+      - "3100:3100"
+    networks:
+      - logging
+      - visualizing
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - grafana-volume:/var/lib/grafana
+      - ./configs/grafana/provisioning:/etc/grafana/provisioning/
+      - ./configs/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - visualizing
 
 volumes:
   postgres-data: {}
+  grafana-volume: {}
 
 networks:
   app-network:
@@ -123,4 +170,8 @@ networks:
   rmq:
     name: 'rabbitmq'
   internal:
-
+    name: 'internal'
+  logging:
+    name: 'logging'
+  visualizing:
+    name: 'visualizing'
