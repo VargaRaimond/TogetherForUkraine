@@ -81,7 +81,7 @@ const AccountSettingsLoggedIn = () => {
         <MenuItem
           onClick={() => {
             logout({ returnTo: window.location.origin });
-            handleMenuItemClick("/"); // todo
+            handleMenuItemClick("/");
           }}
         >
           Log Out

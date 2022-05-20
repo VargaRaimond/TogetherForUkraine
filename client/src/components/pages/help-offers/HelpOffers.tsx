@@ -80,7 +80,6 @@ const HelpOffersPage = () => {
 
   return (
     <PageWrapper>
-      {/* todo: style this */}
       <Typography sx={{ pb: "10px", pl: "10px" }}>
         Pending offers: {offers.length}
       </Typography>

@@ -16,7 +16,7 @@ const HomePage = () => {
         component="img"
         sx={{ width: "80%" }}
         alt="Together for Ukraine"
-        src={process.env.PUBLIC_URL + "/together-for-ukraine-text.png"}
+          src={process.env.PUBLIC_URL + "/logo.png"}
       />
       <StatsGrid />
     </div>

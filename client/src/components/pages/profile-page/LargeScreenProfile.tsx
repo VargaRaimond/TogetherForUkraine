@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
-import ProfileForm, { RemovableJson } from "./ProfileForm";
+import ProfileForm  from "./ProfileForm";
 
 const LargeScreenProfile = () => {
   const { user } = useAuth0();
@@ -20,7 +20,6 @@ const LargeScreenProfile = () => {
           My profile
         </Typography>
         <ProfileForm />
-        <RemovableJson />
       </div>
       <Box
         component={"img"}

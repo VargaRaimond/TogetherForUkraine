@@ -96,11 +96,9 @@ export enum MessageType {
 
 export const getMessage = (
   messageType: MessageType,
-  toTODO: string,
+  to: string,
   htmlBody: any
 ) => {
-  const to = "pw.idp.together.for.ukraine@gmail.com";
-
   switch (messageType) {
     case MessageType.OFFER_ACCEPTED:
       return offerAcceptedMessage(to, htmlBody);

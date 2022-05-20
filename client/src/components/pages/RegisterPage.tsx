@@ -112,6 +112,9 @@ const RegisterPage = () => {
               onChange={handleChange}
               margin="normal"
               type="email"
+              inputProps={{
+                maxlength: 50
+              }}
             />
             <TextField
               required
@@ -122,6 +125,9 @@ const RegisterPage = () => {
               onChange={handleChange}
               margin="normal"
               type="tel"
+              inputProps={{
+                maxlength: 20
+              }}
             />
             <FormControl margin="normal" required>
               <FormLabel id="role">

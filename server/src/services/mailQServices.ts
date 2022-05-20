@@ -2,7 +2,6 @@ import amqplib from "amqplib";
 import { Response } from "express";
 import { IOfferActionMail } from "../models/mailQModels";
 
-// TODO: maybe env?
 const QUEUE_NAME = "emailQ";
 
 const EXCHANGE_TYPE = "direct";
