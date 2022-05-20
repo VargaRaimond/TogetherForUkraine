@@ -41,7 +41,7 @@ router.post(
 router.post(
   "/new-application",
   routesHelper(
-    (req, res) => controller.addNewApplicationMail(req.body, res) // todo: as....
+    (req, res) => controller.addNewApplicationMail(req.body, res)
   )
 );
 

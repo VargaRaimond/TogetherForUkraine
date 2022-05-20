@@ -28,26 +28,6 @@ const AppContent = () => {
         <RegisterPage />
       ) : (
         <Routes>
-          {/*
-          TODO delete this
-          GET HELP:
-            * get-offers -> /offers/
-            * apply -> /usages/
-            * delete offer -> DELETE /offers/:offerId
-
-          PROVIDE HELP:
-            * get-contact-info -> GET /person/:authId/contact (GET contact + personId)
-            * submit-form -> POST /offers/
-
-          HELP-OFFERS:
-            * get-pending-offers -> GET /offers/pending
-            * accept-offer -> PATCH /offers/:offerId/
-            * decline-offer -> DELETE /offers/:offerId/
-
-          PROFILE-PAGE:
-          MY-OFFERS:
-
-          */}
           <Route path="/get-help" element={<GetHelpPage />} />
           <Route path="/provide-help" element={<ProvideHelpPage />} />
           <Route path="/help-offers" element={<HelpOffersPage />} />

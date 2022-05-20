@@ -11,7 +11,6 @@ export default class AuthController extends Controller {
     res: Response
   ) {
     try {
-      // TODO: maybe add this in the env file?
       const domain = "dev-gq9lbjoe.us.auth0.com";
       const clientId = "ebAJS5IfJh9EuMXqWdXXkshAzcFtUS46";
       const clientSecret =

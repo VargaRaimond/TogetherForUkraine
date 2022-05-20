@@ -1,23 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Typography } from "@mui/material";
 import EditableField from "./EditableField";
 import { IPerson } from "../../../api-interface/Person";
 import LoadingScreen from "../../utils/LoadingScreen";
-
-// todo: delete this -> I'm keeping it only for auth debugging
-export const RemovableJson = () => {
-  const { user } = useAuth0();
-
-  return (
-    <div style={{ marginTop: "100px" }}>
-      <Typography color="error" fontWeight="bold">
-        TODO remove this JSON
-      </Typography>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-    </div>
-  );
-};
 
 const ProfileForm = () => {
   const { user } = useAuth0();

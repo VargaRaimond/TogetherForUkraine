@@ -1,7 +1,6 @@
 import amqplib from "amqplib";
 import { sendEmail } from "./src/mailService";
 
-// TODO: maybe env?
 const QUEUE_NAME = "emailQ";
 const EXCHANGE_TYPE = "direct";
 const EXCHANGE_NAME = "main";

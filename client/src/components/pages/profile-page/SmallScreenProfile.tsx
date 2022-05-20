@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
-import ProfileForm, { RemovableJson } from "./ProfileForm";
+import ProfileForm from "./ProfileForm";
 
 const SmallScreenProfile = () => {
   const { user } = useAuth0();
@@ -38,7 +38,6 @@ const SmallScreenProfile = () => {
         />
       </div>
       <ProfileForm />
-      <RemovableJson />
     </Box>
   );
 };
