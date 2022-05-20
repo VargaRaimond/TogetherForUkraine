@@ -1,0 +1,3 @@
+
+Start the windows agent:
+java -jar agent.jar -jnlpUrl http://localhost:8080/computer/agent%2Dwindows%2Dbuild%2Ddeploy/jenkins-agent.jnlp -secret 82f59c7cc2a0ddb1e872c32312ac431eb2b0c6a481ff55d51697d3e5644f33eb -workDir "E:\Facultate\An4\PWeb+IDP\jenkins"
